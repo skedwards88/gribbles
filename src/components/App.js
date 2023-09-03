@@ -106,10 +106,7 @@ export default function App() {
 
     case "info":
       return (
-        <Rules
-          timerDispatch={timerDispatch}
-          setDisplay={setDisplay}
-        ></Rules>
+        <Rules timerDispatch={timerDispatch} setDisplay={setDisplay}></Rules>
       );
 
     case "game":

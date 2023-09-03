@@ -1,6 +1,5 @@
 # Future work
 
-- deploy
 - UPDATE gtag
 - look for todos in code
 - examine code
@@ -14,4 +13,8 @@
 - fix safari styling -- url bar cuts off (check out the sector code for the new css)
 - add way to share specific game
 - make PWA/do lighthouse test
-- maybe don't allow rotation?
+- maybe don't allow screen rotation?
+
+Maybe later
+
+- send analytics in reducer?

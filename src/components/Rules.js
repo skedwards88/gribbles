@@ -14,7 +14,7 @@ export default function Rules({setDisplay, timerDispatch}) {
         id="rulesClose"
         className="close"
         onClick={() => {
-          timerDispatch({ action: "play" });
+          timerDispatch({action: "play"});
           setDisplay("game");
         }}
       >
