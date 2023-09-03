@@ -1,0 +1,377 @@
+html {
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+.App {
+  --default-font-size: min(4vmax, 7vmin, 40px);
+  --board-box-diam: min(15vmax, 20vmin, 145px);
+  --dark-color: rgb(55, 54, 71);
+  --light-color: rgb(239 239 239);
+
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  font-family: sans-serif;
+  font-size: var(--default-font-size);
+  display: grid;
+
+  height: 100vh;
+  width: 100vw;
+  overflow: scroll;
+}
+
+small {
+  font-size: calc(var(--default-font-size) * 0.5);
+}
+
+button {
+  all: unset;
+  text-decoration: none;
+  text-align: center;
+  appearance: none;
+  background-color: var(--light-color);
+  border: 1px solid var(--light-color);
+  border-radius: 5px;
+  color: black;
+  margin: 10px;
+  padding: 1px 6px;
+}
+
+/* Control bar */
+
+#controls {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  grid-area: controls;
+  width: 100%;
+  height: calc(var(--box-size) * 1.2);
+  border-bottom: 2px solid var(--light-color);
+}
+
+#controls > button {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0;
+  width: var(--default-font-size);
+  height: var(--default-font-size);
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  margin: 0 1vmax 0 0;
+  padding: 0;
+}
+
+#pauseButton {
+  background-image: url("./images/pause.svg");
+}
+
+#settingsButton {
+  background-image: url("./images/settings.svg");
+}
+
+#newGameButton {
+  background-image: url("./images/new_game.svg");
+}
+
+#infoButton {
+  background-image: url("./images/info.svg");
+}
+
+#heartButton {
+  background-image: url("./images/heart.svg");
+}
+
+#installButton {
+  background-image: url("./images/install.svg");
+}
+
+#rules {
+  background-image: url("./images/info.svg");
+  grid-area: rules;
+}
+
+#heart {
+  background-image: url("./images/heart.svg");
+  grid-area: heart;
+}
+
+#install {
+  background-image: url("./images/install.svg");
+  grid-area: install;
+}
+
+/* Settings */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#settings {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.setting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  margin: 0.5cm;
+}
+
+.setting-description {
+  padding: 0 5px 0 0;
+}
+
+.setting-info {
+  font-size: calc(var(--default-font-size) / 2);
+}
+
+#setting-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#setting-buttons > button {
+  margin: 10px;
+}
+
+select {
+  font-size: var(--default-font-size);
+  font-family: sans-serif;
+  background-color: var(--light-color);
+  border: 1px solid var(--light-color);
+  border-radius: 2px;
+  text-align: center;
+  color: black;
+  margin: 0;
+  padding: 1px 6px;
+  height: fit-content;
+}
+
+input[type="checkbox" i] {
+  all: unset;
+  text-decoration: none;
+  text-align: center;
+  appearance: none;
+  min-width: var(--default-font-size);
+  min-height: var(--default-font-size);
+  border-radius: 2px;
+  background-color: var(--light-color);
+  border: 3px solid var(--light-color);
+  margin: 0;
+  padding: 1px 6px;
+  height: fit-content;
+}
+
+input[type="checkbox" i]:checked {
+  background-image: url("./images/checkmark-black.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Rules */
+.rules {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "text"
+    "close"
+    "version";
+  text-align: center;
+  overflow: scroll;
+  font-size: calc(var(--default-font-size) * 0.75);
+  justify-items: center;
+  align-items: center;
+}
+
+#rulesHeader {
+  grid-area: header;
+}
+
+#rulesText {
+  white-space: pre-line;
+  margin: 0 2vmax;
+  grid-area: text;
+}
+
+#rulesClose {
+  height: fit-content;
+  width: fit-content;
+  grid-area: close;
+}
+
+#rulesVersion {
+  grid-area: version;
+  margin: 0 0 1vmax;
+}
+
+.info {
+  white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: scroll;
+  justify-items: center;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: calc(var(--default-font-size) * 0.75);
+}
+
+.infoText {
+  margin: 2vmax;
+}
+
+.info a {
+  color: rgb(0 162 255);
+}
+
+/*  */
+
+#paused {
+  text-align: center;
+  align-content: center;
+}
+
+#gribbles {
+  display: grid;
+  grid-template-areas:
+    "controls"
+    "stats"
+    "foundWords"
+    "currentWord"
+    "board";
+  grid-template-rows:
+    auto
+    auto
+    1fr
+    auto
+    auto;
+}
+
+#stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-area: stats;
+  padding: 10px;
+  font-size: calc(var(--default-font-size) * 2 / 3);
+}
+
+#foundWords {
+  grid-area: foundWords;
+  display: flex;
+  background-color: var(--light-color);
+  color: black;
+  flex-direction: column;
+  min-height: 10vh;
+  overflow: scroll;
+  flex-wrap: wrap;
+  padding: 10px;
+  font-size: calc(var(--default-font-size) / 2);
+}
+
+#foundWords > div {
+  margin: 3px;
+}
+
+#currentWord {
+  grid-area: currentWord;
+  text-align: center;
+  white-space: pre;
+}
+
+#wordResult {
+  grid-area: board;
+  background-color: var(--dark-color);
+  touch-action: none;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+  animation-duration: 2s;
+  animation-name: fadeout;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 0.9;
+  }
+}
+
+#board {
+  grid-area: board;
+  display: grid;
+  background-color: var(--dark-color);
+  touch-action: none;
+  justify-content: center;
+}
+
+#board.rows5 {
+  grid-template-columns: repeat(5, 16vmin);
+  grid-template-rows: repeat(5, 16vmin);
+}
+
+#board.rows4 {
+  grid-template-columns: repeat(4, 20vmin);
+  grid-template-rows: repeat(4, 20vmin);
+}
+
+.letter {
+  touch-action: none;
+  margin: 4vmin;
+  background-color: var(--dark-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+.letter.unavailable {
+  color: darkgray;
+}
+
+.computerWord {
+  color: gray;
+}
+
+/* Landscape, large screen */
+@media (orientation: landscape) and (min-width: 1000px) {
+  #gribbles {
+    grid-template-areas:
+      "stats currentWord controls"
+      "foundWords board controls";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+  }
+
+  #controls {
+    flex-direction: column;
+    border: solid var(--light-color);
+    border-width: 0 0 0 2px;
+    align-items: center;
+    height: 100%;
+    width: 7vw;
+  }
+}

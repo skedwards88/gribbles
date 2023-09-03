@@ -1,0 +1,51 @@
+{
+  "name": "gribbles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint --ignore-path .gitignore .",
+    "prettier": "npx prettier --ignore-path .gitignore --write .",
+    "style": "npx stylelint '**/*.css' --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skedwards88/gribbles.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/skedwards88/gribbles/issues"
+  },
+  "homepage": "https://github.com/skedwards88/gribbles#readme",
+  "dependencies": {
+    "@skedwards88/word_lists": "^2.1.14",
+    "@skedwards88/word_logic": "^2.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.14",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.48.0",
+    "eslint-plugin-react": "^7.33.2",
+    "html-webpack-plugin": "^5.5.3",
+    "prettier": "^3.0.3",
+    "style-loader": "^3.3.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "workbox-webpack-plugin": "^7.0.0"
+  }
+}
