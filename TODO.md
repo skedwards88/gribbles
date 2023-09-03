@@ -11,3 +11,7 @@
 - tests
 - make better for large screens
 - update repo about section
+- fix safari styling -- url bar cuts off (check out the sector code for the new css)
+- add way to share specific game
+- make PWA/do lighthouse test
+- maybe don't allow rotation?
