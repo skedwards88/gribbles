@@ -357,7 +357,7 @@ input[type="checkbox" i]:checked {
 }
 
 /* Landscape, large screen */
-@media (orientation: landscape) and (min-width: 1000px) {
+@media (orientation: landscape) {
   #gribbles {
     grid-template-areas:
       "stats currentWord controls"

@@ -9,4 +9,5 @@
 - remove from word games and point to here instead
 - run linters
 - tests
-  
+- make better for large screens
+- update repo about section
