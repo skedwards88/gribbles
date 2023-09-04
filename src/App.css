@@ -102,6 +102,7 @@ button {
   overflow: scroll;
   justify-content: space-evenly;
   align-items: center;
+  font-size: calc(var(--default-font-size) * 0.8);
 }
 
 #settings {
@@ -140,7 +141,7 @@ button {
 }
 
 select {
-  font-size: var(--default-font-size);
+  font-size: calc(var(--default-font-size) * 0.8);
   font-family: sans-serif;
   background-color: var(--light-color);
   border: 1px solid var(--light-color);
@@ -157,8 +158,8 @@ input[type="checkbox" i] {
   text-decoration: none;
   text-align: center;
   appearance: none;
-  min-width: var(--default-font-size);
-  min-height: var(--default-font-size);
+  min-width: calc(var(--default-font-size) * 0.8);
+  min-height: calc(var(--default-font-size) * 0.8);
   border-radius: 2px;
   background-color: var(--light-color);
   border: 3px solid var(--light-color);
