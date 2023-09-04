@@ -67,12 +67,7 @@ button {
   width: var(--default-font-size);
   height: var(--default-font-size);
   background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: center;
-  margin: 0 1vmax 0 0;
-  padding: 0;
+  padding: 1px 6px;
 }
 
 #pauseButton {
