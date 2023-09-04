@@ -18,3 +18,4 @@
 Maybe later
 
 - send analytics in reducer?
+- expand rules or add demo?

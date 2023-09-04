@@ -23,6 +23,13 @@ body {
   overflow: scroll;
 }
 
+h1 {
+  all: unset;
+  font-size: calc(var(--default-font-size) * 1.2);
+  display: block;
+  font-weight: bold;
+}
+
 small {
   font-size: calc(var(--default-font-size) * 0.5);
 }
@@ -90,21 +97,6 @@ button {
 
 #installButton {
   background-image: url("./images/install.svg");
-}
-
-#rules {
-  background-image: url("./images/info.svg");
-  grid-area: rules;
-}
-
-#heart {
-  background-image: url("./images/heart.svg");
-  grid-area: heart;
-}
-
-#install {
-  background-image: url("./images/install.svg");
-  grid-area: install;
 }
 
 /* Settings */
@@ -187,41 +179,7 @@ input[type="checkbox" i]:checked {
   background-size: contain;
 }
 
-/* Rules */
-.rules {
-  display: grid;
-  grid-template-areas:
-    "header"
-    "text"
-    "close"
-    "version";
-  text-align: center;
-  overflow: scroll;
-  font-size: calc(var(--default-font-size) * 0.75);
-  justify-items: center;
-  align-items: center;
-}
-
-#rulesHeader {
-  grid-area: header;
-}
-
-#rulesText {
-  white-space: pre-line;
-  margin: 0 2vmax;
-  grid-area: text;
-}
-
-#rulesClose {
-  height: fit-content;
-  width: fit-content;
-  grid-area: close;
-}
-
-#rulesVersion {
-  grid-area: version;
-  margin: 0 0 1vmax;
-}
+/* Rules and heart */
 
 .info {
   white-space: pre-line;
@@ -243,12 +201,14 @@ input[type="checkbox" i]:checked {
   color: rgb(0 162 255);
 }
 
-/*  */
+/*  timer blocker */
 
 #paused {
   text-align: center;
   align-content: center;
 }
+
+/* game */
 
 #gribbles {
   display: grid;
@@ -291,6 +251,10 @@ input[type="checkbox" i]:checked {
 
 #foundWords > div {
   margin: 3px;
+}
+
+.computerWord {
+  color: gray;
 }
 
 #currentWord {
@@ -352,11 +316,7 @@ input[type="checkbox" i]:checked {
   color: darkgray;
 }
 
-.computerWord {
-  color: gray;
-}
-
-/* Landscape, large screen */
+/* Landscape */
 @media (orientation: landscape) {
   #gribbles {
     grid-template-areas:

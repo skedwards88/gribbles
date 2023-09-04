@@ -29,9 +29,9 @@ export default function Heart({setDisplay}) {
         {`\n`}
         <a href="./privacy.html">Privacy policy</a>
         {`\n\n\n\n`}
-        <small id="rulesVersion">version {packageJson.version}</small>
+        <small>version {packageJson.version}</small>
       </div>
-      <button className="close" onClick={() => setDisplay("game")}>
+      <button onClick={() => setDisplay("game")}>
         Close
       </button>
     </div>

@@ -31,7 +31,6 @@ export default function App() {
   );
 
   React.useEffect(() => {
-    //todo is it ok for useEffect to call dispatch?
     if (gameState.foundWords.length > 0) {
       timerDispatch({action: "increment"});
     }
@@ -93,27 +92,30 @@ export default function App() {
     case "settings":
       return (
         <Settings
+          setDisplay={setDisplay}
           dispatchGameState={dispatchGameState}
           gameState={gameState}
-          timerDispatch={timerDispatch}
           timerState={timerState}
-          setDisplay={setDisplay}
+          timerDispatch={timerDispatch}
         />
       );
 
     case "heart":
-      return <Heart setDisplay={setDisplay}></Heart>;
+      return <Heart setDisplay={setDisplay}/>;
 
     case "info":
       return (
-        <Rules timerDispatch={timerDispatch} setDisplay={setDisplay}></Rules>
+        <Rules
+          timerDispatch={timerDispatch}
+          setDisplay={setDisplay}
+        />
       );
 
     case "game":
       return (
         <Game
-          dispatchGameState={dispatchGameState}
           gameState={gameState}
+          dispatchGameState={dispatchGameState}
           timerState={timerState}
           timerDispatch={timerDispatch}
           setDisplay={setDisplay}

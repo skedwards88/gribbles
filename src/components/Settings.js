@@ -24,11 +24,13 @@ export default function Settings({
       minWordLength: newMinWordLength,
       easyMode: newEasyMode,
     });
+
     timerDispatch({
       action: "reset",
       gameLength: newGameLength,
       bonusTime: newBonusTime,
     });
+
     setDisplay("pause");
   }
 

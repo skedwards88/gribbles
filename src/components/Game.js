@@ -9,12 +9,12 @@ import {FoundWords, AllWords} from "./FoundWords";
 export default function Game({
   gameState,
   dispatchGameState,
+  timerState,
+  timerDispatch,
   setDisplay,
   setInstallPromptEvent,
   showInstallButton,
   installPromptEvent,
-  timerState,
-  timerDispatch,
 }) {
   return (
     <div
