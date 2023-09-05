@@ -5,7 +5,13 @@ import {trie} from "./trie";
 
 export function gameReducer(currentGameState, payload) {
   if (payload.action === "newGame") {
-    return gameInit({...payload, useSaved: false});
+    return gameInit({
+      gridSize: Math.sqrt(currentGameState.letters.length),
+      minWordLength: currentGameState.minWordLength,
+      easyMode: currentGameState.easyMode,
+      ...payload,
+      useSaved: false,
+    });
   } else if (payload.action === "startWord") {
     return {
       ...currentGameState,

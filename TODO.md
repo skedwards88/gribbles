@@ -6,7 +6,6 @@
 - remove from word games and point to here instead
 - fix safari styling -- url bar cuts off (check out the sector code for the new css)
 - add way to share specific game
-- maybe don't allow screen rotation?
 
 Maybe later
 

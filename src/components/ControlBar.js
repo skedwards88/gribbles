@@ -26,10 +26,6 @@ export default function ControlBar({
         onClick={() => {
           dispatchGameState({
             action: "newGame",
-            // todo can just pass along game state in reducer for the following params?
-            // gridSize: Math.sqrt(gameState.letters.length),
-            // minWordLength: gameState.minWordLength,
-            // easyMode: gameState.easyMode,
           });
 
           timerDispatch({
