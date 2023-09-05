@@ -21,7 +21,6 @@ function getPlayableLetters({gridSize, minWordLength, easyMode}) {
   let letters;
   let allWords;
   while (!foundPlayableLetters) {
-    //todo how to prevent infinite loop?
     letters = getLetters(gridSize);
     allWords = findAllWords({
       grid: letters,
