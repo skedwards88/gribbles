@@ -31,9 +31,7 @@ export default function Heart({setDisplay}) {
         {`\n\n\n\n`}
         <small>version {packageJson.version}</small>
       </div>
-      <button onClick={() => setDisplay("game")}>
-        Close
-      </button>
+      <button onClick={() => setDisplay("game")}>Close</button>
     </div>
   );
 }

@@ -101,15 +101,10 @@ export default function App() {
       );
 
     case "heart":
-      return <Heart setDisplay={setDisplay}/>;
+      return <Heart setDisplay={setDisplay} />;
 
     case "info":
-      return (
-        <Rules
-          timerDispatch={timerDispatch}
-          setDisplay={setDisplay}
-        />
-      );
+      return <Rules timerDispatch={timerDispatch} setDisplay={setDisplay} />;
 
     case "game":
       return (
