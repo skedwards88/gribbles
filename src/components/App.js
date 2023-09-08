@@ -14,19 +14,39 @@ import {timerInit} from "../logic/timerInit";
 import {timerReducer} from "../logic/timerReducer";
 
 export default function App() {
+  // Get the seed and game settings from the query params
+  // Only the game settings that would affect the board are shared
+  const searchParams = new URLSearchParams(document.location.search);
+  const seedQuery = searchParams.get("puzzle");
+  // The seed query consists of parts separated by an underscore
+  let seed, gridSize, minWordLength, easyMode;
+  if (seedQuery) {
+    [seed, gridSize, minWordLength, easyMode] = seedQuery.split("_");
+    gridSize = parseInt(gridSize);
+    minWordLength = parseInt(minWordLength);
+    easyMode = easyMode === "e";
+  }
+
   const [display, setDisplay] = React.useState("pause");
   const [installPromptEvent, setInstallPromptEvent] = React.useState();
   const [showInstallButton, setShowInstallButton] = React.useState(true);
 
   const [gameState, dispatchGameState] = React.useReducer(
     gameReducer,
-    {},
+    {
+      seed,
+      gridSize,
+      minWordLength,
+      easyMode,
+    },
     gameInit,
   );
 
   const [timerState, timerDispatch] = React.useReducer(
     timerReducer,
-    {},
+    {
+      useSaved: seed ? false : true,
+    },
     timerInit,
   );
 

@@ -29,6 +29,7 @@ export default function Game({
       }}
     >
       <ControlBar
+        gameState={gameState}
         dispatchGameState={dispatchGameState}
         setDisplay={setDisplay}
         setInstallPromptEvent={setInstallPromptEvent}

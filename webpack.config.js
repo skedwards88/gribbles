@@ -35,6 +35,7 @@ module.exports = (env, argv) => {
     // and not allow any straggling "old" SWs to hang around
     clientsClaim: true,
     skipWaiting: true,
+    maximumFileSizeToCacheInBytes: 4200000, // special case to cache word list for offline play
   });
 
   const plugins =
@@ -71,9 +72,9 @@ module.exports = (env, argv) => {
       clean: true, // removes unused files from output dir
     },
     performance: {
-      maxEntrypointSize: 400000, // bytes
-      maxAssetSize: 400000, // bytes
-    },
+      maxEntrypointSize: 2700000, // special case to cache word list for offline play
+      maxAssetSize: 2700000 // special case to cache word list for offline play
+      },
     devServer: {
       static: "./dist",
       historyApiFallback: true,

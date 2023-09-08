@@ -10,6 +10,7 @@ export function gameReducer(currentGameState, payload) {
       minWordLength: currentGameState.minWordLength,
       easyMode: currentGameState.easyMode,
       ...payload,
+      seed: undefined,
       useSaved: false,
     });
   } else if (payload.action === "startWord") {

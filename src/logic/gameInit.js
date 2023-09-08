@@ -2,17 +2,21 @@ import {letterPool} from "./letterPool";
 import {shuffleArray} from "@skedwards88/word_logic";
 import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
+import seedrandom from "seedrandom";
 
-function getLetters(gridSize) {
+function getLetters(gridSize, pseudoRandomGenerator) {
   // Given the distribution of letters in the word list
   // Choose n letters without substitution
-  const shuffledLetters = shuffleArray(letterPool);
+  const shuffledLetters = shuffleArray(letterPool, pseudoRandomGenerator);
   const chosenLetters = shuffledLetters.slice(0, gridSize * gridSize);
 
   return chosenLetters;
 }
 
-function getPlayableLetters({gridSize, minWordLength, easyMode}) {
+function getPlayableLetters({gridSize, minWordLength, easyMode, seed}) {
+  // Create a new seedable random number generator
+  let pseudoRandomGenerator = seed ? seedrandom(seed) : seedrandom();
+
   // Select letters and make sure that the computer can find at least
   // 50 words (standard mode) or 20 words (easy mode)
   // otherwise the player will not be able to find many words
@@ -21,7 +25,7 @@ function getPlayableLetters({gridSize, minWordLength, easyMode}) {
   let letters;
   let allWords;
   while (!foundPlayableLetters) {
-    letters = getLetters(gridSize);
+    letters = getLetters(gridSize, pseudoRandomGenerator);
     allWords = findAllWords({
       grid: letters,
       minWordLength: minWordLength,
@@ -35,25 +39,41 @@ function getPlayableLetters({gridSize, minWordLength, easyMode}) {
   return [letters, allWords];
 }
 
-export function gameInit({gridSize, minWordLength, easyMode, useSaved = true}) {
-  const savedGameState = useSaved
-    ? JSON.parse(localStorage.getItem("gribblesGameState"))
-    : undefined;
+function getRandomSeed() {
+  const currentDate = new Date();
+  return currentDate.getTime().toString();
+}
 
-  const savedTimerState = useSaved
-    ? JSON.parse(localStorage.getItem("gribblesTimerState"))
-    : undefined;
+export function gameInit({
+  gridSize,
+  minWordLength,
+  easyMode,
+  seed,
+  useSaved = true,
+}) {
+  if (!seed) {
+    seed = getRandomSeed();
+  }
+
+  const savedGameState = JSON.parse(localStorage.getItem("gribblesGameState"));
+
+  const savedTimerState = JSON.parse(
+    localStorage.getItem("gribblesTimerState"),
+  );
 
   if (
+    useSaved &&
     savedGameState &&
     savedTimerState &&
     savedTimerState.remainingTime > 0 &&
     savedGameState.foundWords &&
     savedGameState.bonusWordCount >= 0 &&
-    savedGameState.minWordLength &&
+    savedGameState.minWordLength == minWordLength &&
     savedGameState.letters &&
+    Math.sqrt(savedGameState.letters.length) == gridSize &&
     savedGameState.allWords &&
-    savedGameState.easyMode
+    savedGameState.easyMode == easyMode &&
+    savedGameState.seed === seed
   ) {
     return {...savedGameState, playedIndexes: [], result: ""};
   }
@@ -67,6 +87,7 @@ export function gameInit({gridSize, minWordLength, easyMode, useSaved = true}) {
     gridSize: gridSize,
     minWordLength: minWordLength,
     easyMode: easyMode,
+    seed: seed,
   });
 
   return {
@@ -78,5 +99,6 @@ export function gameInit({gridSize, minWordLength, easyMode, useSaved = true}) {
     result: "",
     allWords: allWords,
     easyMode: easyMode,
+    seed: seed,
   };
 }

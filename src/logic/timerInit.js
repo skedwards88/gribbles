@@ -1,8 +1,10 @@
 export function timerInit({gameLength, bonusTime, useSaved = true}) {
-  const savedTimerState = useSaved
-    ? JSON.parse(localStorage.getItem("gribblesTimerState"))
-    : undefined;
+  const savedTimerState = JSON.parse(
+    localStorage.getItem("gribblesTimerState"),
+  );
+
   if (
+    useSaved &&
     savedTimerState &&
     savedTimerState.bonusTime >= 0 &&
     savedTimerState.gameLength &&

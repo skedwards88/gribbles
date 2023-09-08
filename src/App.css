@@ -62,7 +62,7 @@ button {
   background-repeat: no-repeat;
   background-size: contain;
   border: 0;
-  width: var(--default-font-size);
+  width: min(var(--default-font-size), 10%);
   height: var(--default-font-size);
   background-color: transparent;
   padding: 1px 6px;
@@ -90,6 +90,10 @@ button {
 
 #installButton {
   background-image: url("./images/install.svg");
+}
+
+#shareButton {
+  background-image: url("./images/share.svg");
 }
 
 /* Settings */
@@ -326,6 +330,11 @@ input[type="checkbox" i]:checked {
     align-items: center;
     height: 100%;
     width: 7vw;
+  }
+
+  #controls > button {
+    height: min(var(--default-font-size), 10%);
+    width: var(--default-font-size);
   }
 }
 

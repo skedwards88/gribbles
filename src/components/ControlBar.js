@@ -1,7 +1,9 @@
 import React from "react";
 import {handleInstall} from "../logic/handleInstall";
+import Share from "./Share";
 
 export default function ControlBar({
+  gameState,
   dispatchGameState,
   setDisplay,
   setInstallPromptEvent,
@@ -53,6 +55,19 @@ export default function ControlBar({
       ></button>
 
       <button id="heartButton" onClick={() => setDisplay("heart")}></button>
+
+      {navigator.canShare ? (
+        <Share
+          compact={true}
+          text={"Try out this Gribbles puzzle:"}
+          seed={`${gameState.seed}_${Math.sqrt(gameState.letters.length)}_${
+            gameState.minWordLength
+          }_${gameState.easyMode ? "e" : "h"}`}
+        />
+      ) : (
+        <></>
+      )}
+
       {showInstallButton && installPromptEvent ? (
         <button
           id="installButton"
