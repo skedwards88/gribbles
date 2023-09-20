@@ -1,5 +1,9 @@
 html {
-  height: 100vh;
+  height: 100%;
+  background-color: var(--dark-color);
+  --default-font-size: min(4vmax, 7vmin, 40px);
+  --dark-color: rgb(55 54 71);
+  --light-color: rgb(239 239 239);
 }
 
 body {
@@ -7,18 +11,13 @@ body {
 }
 
 .App {
-  --default-font-size: min(4vmax, 7vmin, 40px);
-  --board-box-diam: min(15vmax, 20vmin, 145px);
-  --dark-color: rgb(55 54 71);
-  --light-color: rgb(239 239 239);
-
   background-color: var(--dark-color);
   color: var(--light-color);
   font-family: sans-serif;
   font-size: var(--default-font-size);
   display: grid;
-  height: 100vh;
-  width: 100vw;
+  height: 90vh; /* fallback if svh isn't handled */
+  height: 98svh;
   overflow: scroll;
 }
 
