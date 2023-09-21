@@ -3,8 +3,7 @@
 - put on google play store
 - put on sect game site
 - remove from word games and point to here instead
-- fix safari styling -- url bar cuts off (check out the sector code for the new css)
-- add way to share specific game
+- make word game service worker update?
 
 Maybe later
 

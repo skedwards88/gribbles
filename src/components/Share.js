@@ -1,19 +1,27 @@
 import React from "react";
 import sendAnalytics from "../logic/sendAnalytics";
 
-function handleShare({text, fullUrl}) {
-  navigator
-    .share({
-      title: "Gribbles",
-      text: `${text}\n\n`,
-      url: fullUrl,
-    })
-    .then(() => console.log("Successful share"))
-    .catch((error) => {
-      // copy to clipboard as backup
-      handleCopy(text);
-      console.log("Error sharing", error);
-    });
+export function handleShare({text, seed}) {
+  const url = "https://skedwards88.github.io/gribbles/";
+  const fullUrl = seed ? `${url}?puzzle=${seed}` : url;
+
+  if (navigator.canShare) {
+    navigator
+      .share({
+        title: "Gribbles",
+        text: `${text}\n\n`,
+        url: fullUrl,
+      })
+      .then(() => console.log("Successful share"))
+      .catch((error) => {
+        // copy to clipboard as backup
+        handleCopy({text, fullUrl});
+        console.log("Error sharing", error);
+      });
+  } else {
+    handleCopy({text, fullUrl});
+  }
+
   sendAnalytics("share");
 }
 
@@ -25,20 +33,10 @@ function handleCopy({text, fullUrl}) {
   }
 }
 
-export default function Share({text, seed, compact = false}) {
-  const url = "https://skedwards88.github.io/gribbles/";
-  const fullUrl = seed ? `${url}?puzzle=${seed}` : url;
-
+export function Share({text, seed}) {
   return (
-    <button
-      id={compact ? "shareButton" : ""}
-      onClick={() =>
-        navigator.canShare
-          ? handleShare({text, fullUrl})
-          : handleCopy({text, fullUrl})
-      }
-    >
-      {compact ? "" : navigator.canShare ? "Share" : "Copy link to share"}
+    <button onClick={() => handleShare({text, seed})}>
+      {navigator.canShare ? "Share" : "Copy link to share"}
     </button>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import Share from "./Share";
+import {Share} from "./Share";
 import packageJson from "../../package.json";
 
 export default function Heart({setDisplay}) {

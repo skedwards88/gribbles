@@ -1,6 +1,6 @@
 import React from "react";
 import {handleInstall} from "../logic/handleInstall";
-import Share from "./Share";
+import {handleShare} from "./Share";
 
 export default function ControlBar({
   gameState,
@@ -56,14 +56,20 @@ export default function ControlBar({
 
       <button id="heartButton" onClick={() => setDisplay("heart")}></button>
 
-      {navigator.canShare ? (
-        <Share
-          compact={true}
-          text={"Try out this Gribbles puzzle:"}
-          seed={`${gameState.seed}_${Math.sqrt(gameState.letters.length)}_${
-            gameState.minWordLength
-          }_${gameState.easyMode ? "e" : "h"}`}
-        />
+      {!navigator.canShare ? (
+        <button
+          id="shareButton"
+          onClick={() => {
+            timerDispatch({action: "pause"});
+            setDisplay("pause");
+            handleShare({
+              text: "Try out this Gribbles puzzle:",
+              seed: `${gameState.seed}_${Math.sqrt(gameState.letters.length)}_${
+                gameState.minWordLength
+              }_${gameState.easyMode ? "e" : "h"}`,
+            });
+          }}
+        ></button>
       ) : (
         <></>
       )}
