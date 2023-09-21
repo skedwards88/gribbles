@@ -56,7 +56,7 @@ export default function ControlBar({
 
       <button id="heartButton" onClick={() => setDisplay("heart")}></button>
 
-      {!navigator.canShare ? (
+      {navigator.canShare ? (
         <button
           id="shareButton"
           onClick={() => {
