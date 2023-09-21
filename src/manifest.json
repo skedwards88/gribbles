@@ -2,6 +2,7 @@
   "name": "Gribbles",
   "short_name": "Gribbles",
   "description": "A jumbled word search game",
+  "id": "?gribbles=1",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
