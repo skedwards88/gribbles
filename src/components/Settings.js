@@ -63,6 +63,9 @@ export default function Settings({
         <div className="setting">
           <div className="setting-description">
             <label htmlFor="gameLength">Base time</label>
+            <div className="setting-info">
+              The amount of time that you start with.
+            </div>
           </div>
           <select id="gameLength" defaultValue={timerState.gameLength}>
             <option value="15">15 sec</option>

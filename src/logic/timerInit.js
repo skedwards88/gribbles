@@ -13,7 +13,7 @@ export function timerInit({gameLength, bonusTime, useSaved = true}) {
     return {...savedTimerState, isRunning: false};
   }
   // use the specified settings, otherwise check local storage, otherwise use default
-  gameLength = gameLength || savedTimerState?.gameLength || 30;
+  gameLength = gameLength || savedTimerState?.gameLength || 60;
   bonusTime = bonusTime ?? savedTimerState?.bonusTime ?? 5;
   return {
     remainingTime: gameLength,
