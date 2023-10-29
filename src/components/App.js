@@ -74,13 +74,14 @@ export default function App() {
       timerState.isRunning
     ) {
       timerDispatch({action: "pause"});
+      setDisplay("pause");
     }
   }
 
   React.useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
-      removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   });
 
   React.useEffect(() => {
