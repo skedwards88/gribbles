@@ -41,5 +41,62 @@
       "purpose": "maskable"
     }
   ],
-  "screenshots": []
+  "screenshots": [
+    {
+      "src": "screenshot-new-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "New game of Gribbles"
+    },
+    {
+      "src": "screenshot-progress-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "In-progress game of Gribbles"
+    },
+    {
+      "src": "screenshot-done-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Complete game of Gribbles"
+    },
+    {
+      "src": "screenshot-settings-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Settings for Gribbles"
+    },
+    {
+      "src": "screenshot-new-tablet.png",
+      "sizes": "1536x2048",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "New game of Gribbles"
+    },
+    {
+      "src": "screenshot-progress-tablet.png",
+      "sizes": "1536x2048",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "In-progress game of Gribbles"
+    },
+    {
+      "src": "screenshot-done-tablet.png",
+      "sizes": "1536x2048",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Complete game of Gribbles"
+    },
+    {
+      "src": "screenshot-settings-tablet.png",
+      "sizes": "1536x2048",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Settings for Gribbles"
+    }
+  ]
 }

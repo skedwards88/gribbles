@@ -24,6 +24,38 @@ module.exports = (env, argv) => {
       {from: "./src/images/maskable_192.png", to: "./assets/maskable_192.png"},
       {from: "./src/manifest.json", to: "./assets/manifest.json"},
       {from: "./src/privacy.html", to: "./privacy.html"},
+      {
+        from: "./src/images/screenshot-new-mobile.png",
+        to: "./assets/screenshot-new-mobile.png",
+      },
+      {
+        from: "./src/images/screenshot-progress-mobile.png",
+        to: "./assets/screenshot-progress-mobile.png",
+      },
+      {
+        from: "./src/images/screenshot-done-mobile.png",
+        to: "./assets/screenshot-done-mobile.png",
+      },
+      {
+        from: "./src/images/screenshot-settings-mobile.png",
+        to: "./assets/screenshot-settings-mobile.png",
+      },
+      {
+        from: "./src/images/screenshot-new-tablet.png",
+        to: "./assets/screenshot-new-tablet.png",
+      },
+      {
+        from: "./src/images/screenshot-progress-tablet.png",
+        to: "./assets/screenshot-progress-tablet.png",
+      },
+      {
+        from: "./src/images/screenshot-done-tablet.png",
+        to: "./assets/screenshot-done-tablet.png",
+      },
+      {
+        from: "./src/images/screenshot-settings-tablet.png",
+        to: "./assets/screenshot-settings-tablet.png",
+      },
     ],
     options: {
       concurrency: 100,
@@ -73,8 +105,8 @@ module.exports = (env, argv) => {
     },
     performance: {
       maxEntrypointSize: 2700000, // special case to cache word list for offline play
-      maxAssetSize: 2700000 // special case to cache word list for offline play
-      },
+      maxAssetSize: 2700000, // special case to cache word list for offline play
+    },
     devServer: {
       static: "./dist",
       historyApiFallback: true,
