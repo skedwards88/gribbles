@@ -2,6 +2,7 @@ const path = require("path");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const packageJson = require("./package.json")
 
 module.exports = (env, argv) => {
   if (argv.mode === "development") {
@@ -68,6 +69,7 @@ module.exports = (env, argv) => {
     clientsClaim: true,
     skipWaiting: true,
     maximumFileSizeToCacheInBytes: 4200000, // special case to cache word list for offline play
+    cacheId: packageJson.version,
   });
 
   const plugins =
