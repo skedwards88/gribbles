@@ -50,7 +50,6 @@ function Letter({letter, letterAvailability, index, dispatchGameState}) {
     <div
       className="letter"
       ref={myRef}
-      key={index.toString() + letter}
       onPointerDown={(e) => handlePointerDown(e, index)}
       onPointerEnter={(e) => handlePointerEnter(e, index, letterAvailability)}
       onPointerUp={(e) => handlePointerUp(e)}
@@ -62,26 +61,24 @@ function Letter({letter, letterAvailability, index, dispatchGameState}) {
 }
 
 export default function Board({
-  letters,
+  lettersAndIds,
   playedIndexes,
   gameOver,
   dispatchGameState,
 }) {
-  const board = letters.map((letter, index) => (
+  const board = lettersAndIds.map((letterAndID, index) => (
     <Letter
-      letter={letter}
+      letter={letterAndID[0]}
       letterAvailability={gameOver ? false : !playedIndexes.includes(index)}
       index={index}
       draggable={false}
       dispatchGameState={dispatchGameState}
-      key={index + letter}
+      key={letterAndID[1]}
     ></Letter>
   ));
 
-  const numColumns = Math.sqrt(letters.length);
-
   return (
-    <div id="board" className={`rows${numColumns}`}>
+    <div id="board">
       {board}{" "}
     </div>
   );

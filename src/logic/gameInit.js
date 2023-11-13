@@ -4,39 +4,48 @@ import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 import seedrandom from "seedrandom";
 
-function getLetters(gridSize, pseudoRandomGenerator) {
+export function getPseudoRandomID() {
+  // todo could compare to existing IDs to ensure unique? Could string two together for increased randomness?
+  const pseudoRandomGenerator = seedrandom();
+  return pseudoRandomGenerator()
+}
+
+function getLetters(numLetters, pseudoRandomGenerator) {
   // Given the distribution of letters in the word list
   // Choose n letters without substitution
   const shuffledLetters = shuffleArray(letterPool, pseudoRandomGenerator);
-  const chosenLetters = shuffledLetters.slice(0, gridSize * gridSize);
+  const chosenLetters = shuffledLetters.slice(0, numLetters);//todo need to make this more robust for case where more letters requested than in list
 
   return chosenLetters;
 }
 
-function getPlayableLetters({gridSize, minWordLength, easyMode, seed}) {
+function getPlayableLetters({numColumns, numRows, seed}) {
   // Create a new seedable random number generator
   let pseudoRandomGenerator = seed ? seedrandom(seed) : seedrandom();
 
   // Select letters and make sure that the computer can find at least
   // 50 words (standard mode) or 20 words (easy mode)
   // otherwise the player will not be able to find many words
-  const minWords = easyMode ? 20 : 50;
+  const minWords = 5;//todo omit min word requirement? if add opportunity to shuffle, should be ok
   let foundPlayableLetters = false;
   let letters;
   let allWords;
+  const numLetters = numColumns * numRows;
   while (!foundPlayableLetters) {
-    letters = getLetters(gridSize, pseudoRandomGenerator);
+    letters = getLetters(numLetters, pseudoRandomGenerator);
     allWords = findAllWords({
-      grid: letters,
-      minWordLength: minWordLength,
-      easyMode: easyMode,
+      letters: letters,
+      numColumns: numColumns,
+      numRows: numRows,
+      minWordLength: 2,
+      easyMode: true,
       trie,
     });
     if (allWords.length > minWords) {
       foundPlayableLetters = true;
     }
   }
-  return [letters, allWords];
+  return letters;
 }
 
 function getRandomSeed() {
@@ -45,9 +54,6 @@ function getRandomSeed() {
 }
 
 export function gameInit({
-  gridSize,
-  minWordLength,
-  easyMode,
   seed,
   useSaved = true,
 }) {
@@ -57,48 +63,32 @@ export function gameInit({
 
   const savedGameState = JSON.parse(localStorage.getItem("gribblesGameState"));
 
-  const savedTimerState = JSON.parse(
-    localStorage.getItem("gribblesTimerState"),
-  );
-
   if (
     useSaved &&
     savedGameState &&
-    savedTimerState &&
-    savedTimerState.remainingTime > 0 &&
-    savedGameState.foundWords &&
-    savedGameState.bonusWordCount >= 0 &&
-    savedGameState.minWordLength == minWordLength &&
-    savedGameState.letters &&
-    Math.sqrt(savedGameState.letters.length) == gridSize &&
-    savedGameState.allWords &&
-    savedGameState.easyMode == easyMode &&
+    savedGameState.lettersAndIds &&
     savedGameState.seed === seed
   ) {
     return {...savedGameState, playedIndexes: [], result: ""};
   }
 
-  // use the specified settings, otherwise check local storage, otherwise use default
-  gridSize = gridSize || Math.sqrt(savedGameState?.letters?.length) || 4;
-  minWordLength = minWordLength || savedGameState?.minWordLength || 3;
-  easyMode = easyMode ?? savedGameState?.easyMode ?? true;
+  const numRows = 8;//todo play with dimensions on different screen sizes
+  const numColumns = 6;
 
-  const [letters, allWords] = getPlayableLetters({
-    gridSize: gridSize,
-    minWordLength: minWordLength,
-    easyMode: easyMode,
+  const letters = getPlayableLetters({
+    numColumns: numColumns,
+    numRows: numRows,
     seed: seed,
   });
 
+  const lettersAndIds = letters.map(letter => [letter, getPseudoRandomID()])//todo make better uuid
+
   return {
-    foundWords: [],
-    bonusWordCount: 0,
-    minWordLength: minWordLength,
-    letters: letters,
+    lettersAndIds: lettersAndIds,
     playedIndexes: [],
+    numColumns: numColumns,
+    numRows: numRows,
     result: "",
-    allWords: allWords,
-    easyMode: easyMode,
-    seed: seed,
+    seed: seed, //todo remove seed?
   };
 }

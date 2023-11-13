@@ -9,20 +9,9 @@ export default function ControlBar({
   setInstallPromptEvent,
   showInstallButton,
   installPromptEvent,
-  timerState,
-  timerDispatch,
 }) {
   return (
     <div id="controls">
-      <button
-        id="pauseButton"
-        onClick={() => {
-          timerDispatch({action: "pause"});
-          setDisplay("pause");
-        }}
-        disabled={!timerState.isRunning || timerState.remainingTime <= 0}
-      ></button>
-
       <button
         id="newGameButton"
         onClick={() => {
@@ -30,10 +19,6 @@ export default function ControlBar({
             action: "newGame",
           });
 
-          timerDispatch({
-            action: "reset",
-            gameLength: timerState.gameLength,
-          });
           setDisplay("pause");
         }}
       ></button>
@@ -41,7 +26,6 @@ export default function ControlBar({
       <button
         id="settingsButton"
         onClick={() => {
-          timerDispatch({action: "pause"});
           setDisplay("settings");
         }}
       ></button>
@@ -49,7 +33,6 @@ export default function ControlBar({
       <button
         id="infoButton"
         onClick={() => {
-          timerDispatch({action: "pause"});
           setDisplay("info");
         }}
       ></button>
@@ -60,13 +43,10 @@ export default function ControlBar({
         <button
           id="shareButton"
           onClick={() => {
-            timerDispatch({action: "pause"});
             setDisplay("pause");
             handleShare({
               text: "Try out this Gribbles puzzle:",
-              seed: `${gameState.seed}_${Math.sqrt(gameState.letters.length)}_${
-                gameState.minWordLength
-              }_${gameState.easyMode ? "e" : "h"}`,
+              seed: `${gameState.seed}`,
             });
           }}
         ></button>

@@ -4,6 +4,8 @@ html {
   --default-font-size: min(4vmax, 7vmin, 40px);
   --dark-color: rgb(55 54 71);
   --light-color: rgb(239 239 239);
+  --num-rows: 8;
+  --num-cols: 6;
 }
 
 body {
@@ -198,13 +200,6 @@ input[type="checkbox" i]:checked {
   color: rgb(0 162 255);
 }
 
-/*  timer blocker */
-
-#paused {
-  text-align: center;
-  align-content: center;
-}
-
 /* game */
 
 #gribbles {
@@ -212,13 +207,11 @@ input[type="checkbox" i]:checked {
   grid-template-areas:
     "controls"
     "stats"
-    "foundWords"
     "currentWord"
     "board";
   grid-template-rows:
     auto
     auto
-    1fr
     auto
     auto;
 }
@@ -231,22 +224,6 @@ input[type="checkbox" i]:checked {
   grid-area: stats;
   padding: 10px;
   font-size: calc(var(--default-font-size) * 2 / 3);
-}
-
-#foundWords {
-  grid-area: foundWords;
-  display: flex;
-  background-color: var(--light-color);
-  color: black;
-  flex-flow: column wrap;
-  min-height: 10vh;
-  overflow: scroll;
-  padding: 10px;
-  font-size: calc(var(--default-font-size) / 2);
-}
-
-#foundWords > div {
-  margin: 3px;
 }
 
 .computerWord {
@@ -288,16 +265,8 @@ input[type="checkbox" i]:checked {
   background-color: var(--dark-color);
   touch-action: none;
   justify-content: center;
-}
-
-#board.rows5 {
-  grid-template-columns: repeat(5, 16vmin);
-  grid-template-rows: repeat(5, 16vmin);
-}
-
-#board.rows4 {
-  grid-template-columns: repeat(4, 20vmin);
-  grid-template-rows: repeat(4, 20vmin);
+  grid-template-columns: repeat(var(--num-cols), calc(90vw / var(--num-cols)));
+  grid-template-rows: repeat(var(--num-rows), calc(90vw / var(--num-cols)));
 }
 
 .letter {
@@ -306,20 +275,31 @@ input[type="checkbox" i]:checked {
   background-color: var(--dark-color);
   font-weight: bold;
   text-align: center;
+  animation: fallDown 1.5s ease-in-out;
 }
 
 .letter.unavailable {
   color: darkgray;
 }
 
+/* todo need to work on the animation */
+/* @keyframes fallDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+} */
+@keyframes fallDown {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* Landscape */
 @media (orientation: landscape) {
   #gribbles {
-      grid-template-areas: 
+      grid-template-areas:
       "stats currentWord controls"
-      "foundWords board controls";
+      "board board controls";
       grid-template-rows: auto 1fr;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: auto auto auto;
   }
 
   #controls {

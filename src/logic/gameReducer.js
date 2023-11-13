@@ -2,13 +2,55 @@ import {isKnown} from "@skedwards88/word_logic";
 import {gameInit} from "./gameInit";
 import {checkIfNeighbors} from "@skedwards88/word_logic";
 import {trie} from "./trie";
+import {replaceIndexes} from "./arrayToColumns";
+
+// todo update this function in the word_logic pkg
+// function checkIfNeighbors({ indexA, indexB, numColumns, numRows }) {
+//   // Check if two indexes are neighbors in a grid
+//   // given the two indexes and the grid size
+//   // If only one index is provided, returns true
+
+//   if (indexA === undefined || indexB === undefined) {
+//     return true;
+//   }
+
+//   const surroundingIndexes = getSurroundingIndexes({
+//     index: indexB,
+//     numColumns: numColumns,
+//     numRows: numRows,
+//   });
+
+//   return surroundingIndexes.includes(indexA) ? true : false;
+// }
+// todo update this function in the word_logic pkg
+// function getSurroundingIndexes({ index, numColumns, numRows }) {
+//   const column = index % numColumns;
+//   const row = Math.floor(index / numColumns);
+//   let surroundingIndexes = [];
+//   for (let currentRow = row - 1; currentRow <= row + 1; currentRow++) {
+//     for (
+//       let currentColumn = column - 1;
+//       currentColumn <= column + 1;
+//       currentColumn++
+//     ) {
+//       if (
+//         currentRow >= 0 &&
+//         currentColumn >= 0 &&
+//         currentRow < numRows &&
+//         currentColumn < numColumns
+//       ) {
+//         const currentIndex = currentColumn + currentRow * numColumns;
+//         surroundingIndexes.push(currentIndex);
+//       }
+//     }
+//   }
+//   console.log("surroundingIndexes: ", surroundingIndexes)
+//   return surroundingIndexes;
+// }
 
 export function gameReducer(currentGameState, payload) {
   if (payload.action === "newGame") {
     return gameInit({
-      gridSize: Math.sqrt(currentGameState.letters.length),
-      minWordLength: currentGameState.minWordLength,
-      easyMode: currentGameState.easyMode,
       ...payload,
       seed: undefined,
       useSaved: false,
@@ -30,7 +72,8 @@ export function gameReducer(currentGameState, payload) {
           currentGameState.playedIndexes.length - 1
         ],
       indexB: payload.letterIndex,
-      gridSize: Math.sqrt(currentGameState.letters.length),
+      numColumns: currentGameState.numColumns,
+      numRows: currentGameState.numRows,
     });
     if (!isNeighboring) {
       return currentGameState;
@@ -54,12 +97,12 @@ export function gameReducer(currentGameState, payload) {
     }
 
     const newWord = currentGameState.playedIndexes
-      .map((index) => currentGameState.letters[index])
+      .map((index) => currentGameState.lettersAndIds[index][0])
       .join("")
       .toUpperCase();
 
-    // if the word is below the min length, don't add the word
-    if (newWord.length < currentGameState.minWordLength) {
+    // if the word is less than 2, don't add the word
+    if (newWord.length < 2) {
       return {
         ...currentGameState,
         wordInProgress: false,
@@ -68,18 +111,8 @@ export function gameReducer(currentGameState, payload) {
       };
     }
 
-    // if we already have the word, don't add the word
-    if (currentGameState.foundWords.includes(newWord)) {
-      return {
-        ...currentGameState,
-        wordInProgress: false,
-        playedIndexes: [],
-        result: "Already found",
-      };
-    }
-
     // check if word is a real word
-    const {isWord, isEasy} = isKnown(newWord, trie);
+    const {isWord} = isKnown(newWord, trie);
     if (!isWord) {
       return {
         ...currentGameState,
@@ -89,21 +122,18 @@ export function gameReducer(currentGameState, payload) {
       };
     }
 
-    // If playing in easy mode
-    // and the word isn't in the easy word list,
-    // consider it a bonus
-    const newBonusWordCount =
-      !isEasy && currentGameState.easyMode
-        ? currentGameState.bonusWordCount + 1
-        : currentGameState.bonusWordCount;
+    const newLettersAndIds = replaceIndexes(
+      currentGameState.lettersAndIds,
+      currentGameState.playedIndexes,
+      currentGameState.numColumns,
+      currentGameState.numRows,
+    );
 
-    const newFoundWords = [...currentGameState.foundWords, newWord];
     return {
       ...currentGameState,
-      foundWords: newFoundWords,
       wordInProgress: false,
       playedIndexes: [],
-      bonusWordCount: newBonusWordCount,
+      lettersAndIds: newLettersAndIds,
     };
   } else {
     console.log(`unknown action: ${payload.action}`);
