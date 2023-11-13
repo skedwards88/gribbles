@@ -3,6 +3,7 @@ import {shuffleArray} from "@skedwards88/word_logic";
 import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 import seedrandom from "seedrandom";
+import { pickRandom } from "./arrayToColumns";
 
 export function getPseudoRandomID() {
   // todo could compare to existing IDs to ensure unique? Could string two together for increased randomness?
@@ -66,7 +67,7 @@ export function gameInit({
   if (
     useSaved &&
     savedGameState &&
-    savedGameState.lettersAndIds &&
+    savedGameState.letterData && // todo be more specific with elements of letterData
     savedGameState.seed === seed
   ) {
     return {...savedGameState, playedIndexes: [], result: ""};
@@ -81,10 +82,21 @@ export function gameInit({
     seed: seed,
   });
 
-  const lettersAndIds = letters.map(letter => [letter, getPseudoRandomID()])//todo make better uuid
+  const colorOptions = ["color1", "color2"];
+  let letterData = []
+  for (const letter of letters) {
+    const id = getPseudoRandomID();
+    const color = pickRandom(colorOptions)
+    letterData.push({
+      letter,
+      id,
+      color
+    })
+
+  }
 
   return {
-    lettersAndIds: lettersAndIds,
+    letterData: letterData,
     playedIndexes: [],
     numColumns: numColumns,
     numRows: numRows,

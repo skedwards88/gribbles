@@ -40,15 +40,15 @@ export default function Game({
       <div id="currentWord">
         {gameState.playedIndexes.length > 0
           ? gameState.playedIndexes
-              .map((index) => gameState.lettersAndIds[index][0])
-              .join("")
+              .map((index) => gameState.letterData[index].letter)
+              .join("").toUpperCase()
           : " "}
       </div>
 
       <WordResult result={gameState.result} />
 
       <Board
-        lettersAndIds={gameState.lettersAndIds}
+        letterData={gameState.letterData}
         playedIndexes={gameState.playedIndexes}
         gameOver={false} //todo
         dispatchGameState={dispatchGameState}

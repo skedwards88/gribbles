@@ -97,7 +97,7 @@ export function gameReducer(currentGameState, payload) {
     }
 
     const newWord = currentGameState.playedIndexes
-      .map((index) => currentGameState.lettersAndIds[index][0])
+      .map((index) => currentGameState.letterData[index].letter)
       .join("")
       .toUpperCase();
 
@@ -122,8 +122,8 @@ export function gameReducer(currentGameState, payload) {
       };
     }
 
-    const newLettersAndIds = replaceIndexes(
-      currentGameState.lettersAndIds,
+    const newLetterData = replaceIndexes(
+      currentGameState.letterData,
       currentGameState.playedIndexes,
       currentGameState.numColumns,
       currentGameState.numRows,
@@ -133,7 +133,7 @@ export function gameReducer(currentGameState, payload) {
       ...currentGameState,
       wordInProgress: false,
       playedIndexes: [],
-      lettersAndIds: newLettersAndIds,
+      letterData: newLetterData,
     };
   } else {
     console.log(`unknown action: ${payload.action}`);

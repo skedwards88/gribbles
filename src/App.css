@@ -276,10 +276,22 @@ input[type="checkbox" i]:checked {
   font-weight: bold;
   text-align: center;
   animation: fallDown 1.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+  width: 60%;
 }
 
 .letter.unavailable {
   color: darkgray;
+}
+
+.letter.color1 {
+  background-color: rgb(240, 57, 57);
+}
+.letter.color2 {
+  background-color: rgb(73, 73, 239);
 }
 
 /* todo need to work on the animation */

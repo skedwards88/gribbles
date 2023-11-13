@@ -34,36 +34,39 @@ function columnsToArray(columns) {
   return array;
 }
 
-function pickRandom(inputArray) {
+// todo add pickRandom to wordLogic
+export function pickRandom(inputArray) {
   return inputArray[Math.floor(Math.random() * inputArray.length)];
 }
 
-function padLetters(array, size) {
+function padLetterData(array, size) {
   // todo handle array longer than size
   while (array.length < size) {
-    const newLetter = pickRandom(letterPool);
-    const newID = getPseudoRandomID()
-    array = [[newLetter, newID], ...array];
+    const letter = pickRandom(letterPool);
+    const id = getPseudoRandomID();
+    const color = pickRandom(["color1","color2"]);//todo have color1/color2 list hard coded in two places
+    array = [{letter,id,color}, ...array];
   }
   return array;
 }
 
-export function replaceIndexes(letters, indexesToReplace, numColumns, numRows) {
-  const allIndexes = letters.map((_, index) => index);
+// todo make this function more generic and put in logic package?
+export function replaceIndexes(letterData, indexesToReplace, numColumns, numRows) {
+  const allIndexes = letterData.map((_, index) => index);
   const indexColumns = arrayToColumns(allIndexes, numColumns);
   const newColumns = [];
   for (const column of indexColumns) {
     const remainingColumnIndexes = column.filter(
       (index) => !indexesToReplace.includes(index),
     );
-    const remainingColumnLetters = remainingColumnIndexes.map(
-      (index) => letters[index],
+    const remainingColumnLetterData = remainingColumnIndexes.map(
+      (index) => letterData[index],
     );
-    const paddedColumn = padLetters(remainingColumnLetters, numRows);
+    const paddedColumn = padLetterData(remainingColumnLetterData, numRows);
     newColumns.push(paddedColumn);
   }
 
-  const newLetters = columnsToArray(newColumns);
+  const newLetterData = columnsToArray(newColumns);
 
-  return newLetters;
+  return newLetterData;
 }

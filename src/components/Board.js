@@ -1,6 +1,6 @@
 import React from "react";
 
-function Letter({letter, letterAvailability, index, dispatchGameState}) {
+function Letter({letter, color, letterAvailability, index, dispatchGameState}) {
   const myRef = React.useRef();
 
   React.useLayoutEffect(() => {
@@ -48,7 +48,7 @@ function Letter({letter, letterAvailability, index, dispatchGameState}) {
 
   return (
     <div
-      className="letter"
+      className={`letter ${color}`}
       ref={myRef}
       onPointerDown={(e) => handlePointerDown(e, index)}
       onPointerEnter={(e) => handlePointerEnter(e, index, letterAvailability)}
@@ -61,19 +61,20 @@ function Letter({letter, letterAvailability, index, dispatchGameState}) {
 }
 
 export default function Board({
-  lettersAndIds,
+  letterData,
   playedIndexes,
   gameOver,
   dispatchGameState,
 }) {
-  const board = lettersAndIds.map((letterAndID, index) => (
+  const board = letterData.map((letterDatum, index) => (
     <Letter
-      letter={letterAndID[0]}
+      letter={letterDatum.letter}
+      color={letterDatum.color}
       letterAvailability={gameOver ? false : !playedIndexes.includes(index)}
       index={index}
       draggable={false}
       dispatchGameState={dispatchGameState}
-      key={letterAndID[1]}
+      key={letterDatum.id}
     ></Letter>
   ));
 
