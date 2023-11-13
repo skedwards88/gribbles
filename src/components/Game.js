@@ -41,7 +41,8 @@ export default function Game({
         {gameState.playedIndexes.length > 0
           ? gameState.playedIndexes
               .map((index) => gameState.letterData[index].letter)
-              .join("").toUpperCase()
+              .join("")
+              .toUpperCase()
           : " "}
       </div>
 

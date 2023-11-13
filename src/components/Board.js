@@ -78,9 +78,5 @@ export default function Board({
     ></Letter>
   ));
 
-  return (
-    <div id="board">
-      {board}{" "}
-    </div>
-  );
+  return <div id="board">{board} </div>;
 }

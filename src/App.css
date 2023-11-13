@@ -300,18 +300,22 @@ input[type="checkbox" i]:checked {
   100% { transform: translateY(0); }
 } */
 @keyframes fallDown {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Landscape */
 @media (orientation: landscape) {
   #gribbles {
-      grid-template-areas:
+    grid-template-areas:
       "stats currentWord controls"
       "board board controls";
-      grid-template-rows: auto 1fr;
-      grid-template-columns: auto auto auto;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto auto auto;
   }
 
   #controls {

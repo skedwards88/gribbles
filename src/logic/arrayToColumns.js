@@ -1,6 +1,6 @@
 import {letterPool} from "./letterPool";
 
-import { getPseudoRandomID } from "./gameInit";
+import {getPseudoRandomID} from "./gameInit";
 
 // todo add tests
 
@@ -44,14 +44,19 @@ function padLetterData(array, size) {
   while (array.length < size) {
     const letter = pickRandom(letterPool);
     const id = getPseudoRandomID();
-    const color = pickRandom(["color1","color2"]);//todo have color1/color2 list hard coded in two places
-    array = [{letter,id,color}, ...array];
+    const color = pickRandom(["color1", "color2"]); //todo have color1/color2 list hard coded in two places
+    array = [{letter, id, color}, ...array];
   }
   return array;
 }
 
 // todo make this function more generic and put in logic package?
-export function replaceIndexes(letterData, indexesToReplace, numColumns, numRows) {
+export function replaceIndexes(
+  letterData,
+  indexesToReplace,
+  numColumns,
+  numRows,
+) {
   const allIndexes = letterData.map((_, index) => index);
   const indexColumns = arrayToColumns(allIndexes, numColumns);
   const newColumns = [];

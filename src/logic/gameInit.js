@@ -3,19 +3,19 @@ import {shuffleArray} from "@skedwards88/word_logic";
 import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 import seedrandom from "seedrandom";
-import { pickRandom } from "./arrayToColumns";
+import {pickRandom} from "./arrayToColumns";
 
 export function getPseudoRandomID() {
   // todo could compare to existing IDs to ensure unique? Could string two together for increased randomness?
   const pseudoRandomGenerator = seedrandom();
-  return pseudoRandomGenerator()
+  return pseudoRandomGenerator();
 }
 
 function getLetters(numLetters, pseudoRandomGenerator) {
   // Given the distribution of letters in the word list
   // Choose n letters without substitution
   const shuffledLetters = shuffleArray(letterPool, pseudoRandomGenerator);
-  const chosenLetters = shuffledLetters.slice(0, numLetters);//todo need to make this more robust for case where more letters requested than in list
+  const chosenLetters = shuffledLetters.slice(0, numLetters); //todo need to make this more robust for case where more letters requested than in list
 
   return chosenLetters;
 }
@@ -27,7 +27,7 @@ function getPlayableLetters({numColumns, numRows, seed}) {
   // Select letters and make sure that the computer can find at least
   // 50 words (standard mode) or 20 words (easy mode)
   // otherwise the player will not be able to find many words
-  const minWords = 5;//todo omit min word requirement? if add opportunity to shuffle, should be ok
+  const minWords = 5; //todo omit min word requirement? if add opportunity to shuffle, should be ok
   let foundPlayableLetters = false;
   let letters;
   let allWords;
@@ -54,10 +54,7 @@ function getRandomSeed() {
   return currentDate.getTime().toString();
 }
 
-export function gameInit({
-  seed,
-  useSaved = true,
-}) {
+export function gameInit({seed, useSaved = true}) {
   if (!seed) {
     seed = getRandomSeed();
   }
@@ -73,7 +70,7 @@ export function gameInit({
     return {...savedGameState, playedIndexes: [], result: ""};
   }
 
-  const numRows = 8;//todo play with dimensions on different screen sizes
+  const numRows = 8; //todo play with dimensions on different screen sizes
   const numColumns = 6;
 
   const letters = getPlayableLetters({
@@ -83,16 +80,15 @@ export function gameInit({
   });
 
   const colorOptions = ["color1", "color2"];
-  let letterData = []
+  let letterData = [];
   for (const letter of letters) {
     const id = getPseudoRandomID();
-    const color = pickRandom(colorOptions)
+    const color = pickRandom(colorOptions);
     letterData.push({
       letter,
       id,
-      color
-    })
-
+      color,
+    });
   }
 
   return {
