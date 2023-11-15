@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/skedwards88/gribbles#readme",
   "dependencies": {
-    "@skedwards88/word_lists": "^2.1.14",
+    "@skedwards88/word_lists": "latest",
     "@skedwards88/word_logic": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
