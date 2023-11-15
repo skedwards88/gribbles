@@ -53,6 +53,7 @@ export default function Game({
         playedIndexes={gameState.playedIndexes}
         gameOver={false} //todo
         dispatchGameState={dispatchGameState}
+        numColors={gameState.numColors}
       ></Board>
     </div>
   );

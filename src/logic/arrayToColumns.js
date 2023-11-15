@@ -39,12 +39,11 @@ export function pickRandom(inputArray) {
   return inputArray[Math.floor(Math.random() * inputArray.length)];
 }
 
-function padLetterData(array, size) {
+function padLetterData(array, size, color) {
   // todo handle array longer than size
   while (array.length < size) {
     const letter = pickRandom(letterPool);
     const id = getPseudoRandomID();
-    const color = pickRandom(["color1", "color2"]); //todo have color1/color2 list hard coded in two places
     array = [{letter, id, color}, ...array];
   }
   return array;
@@ -67,7 +66,9 @@ export function replaceIndexes(
     const remainingColumnLetterData = remainingColumnIndexes.map(
       (index) => letterData[index],
     );
-    const paddedColumn = padLetterData(remainingColumnLetterData, numRows);
+    const lowestColor = Math.min(...letterData.map(datum => datum.color));
+
+    const paddedColumn = padLetterData(remainingColumnLetterData, numRows, lowestColor + 1);
     newColumns.push(paddedColumn);
   }
 

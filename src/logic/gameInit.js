@@ -3,7 +3,6 @@ import {shuffleArray} from "@skedwards88/word_logic";
 import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 import seedrandom from "seedrandom";
-import {pickRandom} from "./arrayToColumns";
 
 export function getPseudoRandomID() {
   // todo could compare to existing IDs to ensure unique? Could string two together for increased randomness?
@@ -70,7 +69,7 @@ export function gameInit({seed, useSaved = true}) {
     return {...savedGameState, playedIndexes: [], result: ""};
   }
 
-  const numRows = 7; //todo play with dimensions on different screen sizes
+  const numRows = 5; //todo play with dimensions on different screen sizes
   const numColumns = 5; // todo i have this hardcoded here and in css right now
 
   const letters = getPlayableLetters({
@@ -79,11 +78,10 @@ export function gameInit({seed, useSaved = true}) {
     seed: seed,
   });
 
-  const colorOptions = ["color1", "color2"];
   let letterData = [];
   for (const letter of letters) {
     const id = getPseudoRandomID();
-    const color = pickRandom(colorOptions);
+    const color = 0;
     letterData.push({
       letter,
       id,
@@ -98,5 +96,6 @@ export function gameInit({seed, useSaved = true}) {
     numRows: numRows,
     result: "",
     seed: seed, //todo remove seed?
+    numColors: 3, // todo change this as finalize colors
   };
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Letter({letter, color, letterAvailability, index, dispatchGameState}) {
+function Letter({letter, color, letterAvailability, index, dispatchGameState, numColors}) {
   const myRef = React.useRef();
 
   React.useLayoutEffect(() => {
@@ -49,6 +49,9 @@ function Letter({letter, color, letterAvailability, index, dispatchGameState}) {
   return (
     <div
       className={`letter ${color}`}
+      style={{
+        "backgroundColor": `var(--color${color % numColors})`,//todo handle case where need to cycle colors
+      }}
       ref={myRef}
       onPointerDown={(e) => handlePointerDown(e, index)}
       onPointerEnter={(e) => handlePointerEnter(e, index, letterAvailability)}
@@ -65,6 +68,7 @@ export default function Board({
   playedIndexes,
   gameOver,
   dispatchGameState,
+  numColors,
 }) {
   const board = letterData.map((letterDatum, index) => (
     <Letter
@@ -75,6 +79,7 @@ export default function Board({
       draggable={false}
       dispatchGameState={dispatchGameState}
       key={letterDatum.id}
+      numColors={numColors}
     ></Letter>
   ));
 

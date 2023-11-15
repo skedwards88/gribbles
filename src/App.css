@@ -4,8 +4,12 @@ html {
   --default-font-size: min(4vmax, 7vmin, 40px);
   --dark-color: rgb(55 54 71);
   --light-color: rgb(239 239 239);
-  --num-rows: 7;
+  --num-rows: 5;
   --num-cols: 5;
+  /* todo determine colors with good contrast */
+  --color0: rgb(119, 61, 141);
+  --color1: rgb(117, 100, 228);
+  --color2: rgb(81, 143, 68);
 }
 
 body {
@@ -285,13 +289,6 @@ input[type="checkbox" i]:checked {
 
 .letter.unavailable {
   color: darkgray;
-}
-
-.letter.color1 {
-  background-color: rgb(240, 57, 57);
-}
-.letter.color2 {
-  background-color: rgb(73, 73, 239);
 }
 
 /* todo need to work on the animation */
