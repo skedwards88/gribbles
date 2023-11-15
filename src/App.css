@@ -4,8 +4,8 @@ html {
   --default-font-size: min(4vmax, 7vmin, 40px);
   --dark-color: rgb(55 54 71);
   --light-color: rgb(239 239 239);
-  --num-rows: 8;
-  --num-cols: 6;
+  --num-rows: 7;
+  --num-cols: 5;
 }
 
 body {
@@ -295,18 +295,19 @@ input[type="checkbox" i]:checked {
 }
 
 /* todo need to work on the animation */
-/* @keyframes fallDown {
+/* make the 0% translateY be related to the starting row of the letter */
+@keyframes fallDown {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(0); }
-} */
-@keyframes fallDown {
+}
+/* @keyframes fallDown {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
   }
-}
+} */
 
 /* Landscape */
 @media (orientation: landscape) {

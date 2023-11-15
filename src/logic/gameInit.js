@@ -70,8 +70,8 @@ export function gameInit({seed, useSaved = true}) {
     return {...savedGameState, playedIndexes: [], result: ""};
   }
 
-  const numRows = 8; //todo play with dimensions on different screen sizes
-  const numColumns = 6;
+  const numRows = 7; //todo play with dimensions on different screen sizes
+  const numColumns = 5; // todo i have this hardcoded here and in css right now
 
   const letters = getPlayableLetters({
     numColumns: numColumns,
