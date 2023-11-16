@@ -46,6 +46,26 @@ export function gameReducer(currentGameState, payload) {
       playedIndexes: newPlayedIndexes,
       result: "",
     };
+  } else if (payload.action === "removeLetter") {
+    if (!currentGameState.wordInProgress) {
+      return currentGameState;
+    }
+    // Don't remove a letter if the player didn't go back to the letter before the last letter
+    let newPlayedIndexes = [...currentGameState.playedIndexes];
+    const lastIndexPlayed = newPlayedIndexes[newPlayedIndexes.length - 2];
+    if (lastIndexPlayed !== payload.letterIndex) {
+      return currentGameState;
+    }
+
+    newPlayedIndexes = currentGameState.playedIndexes.slice(
+      0,
+      newPlayedIndexes.length - 1
+    );
+
+    return {
+      ...currentGameState,
+      playedIndexes: newPlayedIndexes,
+    };
   } else if (payload.action === "endWord") {
     // Since we end the word on board up or on app up (in case the user swipes off the board), we can end up calling this case twice.
     // Return early if we no longer have a word in progress.
