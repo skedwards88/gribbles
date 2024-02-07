@@ -59,7 +59,7 @@ export function gameReducer(currentGameState, payload) {
 
     newPlayedIndexes = currentGameState.playedIndexes.slice(
       0,
-      newPlayedIndexes.length - 1
+      newPlayedIndexes.length - 1,
     );
 
     return {

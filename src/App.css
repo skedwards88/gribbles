@@ -1,6 +1,7 @@
 html {
   height: 100%;
   background-color: var(--dark-color);
+
   --default-font-size: min(4vmax, 7vmin, 40px);
   --dark-color: rgb(55 54 71);
   --light-color: rgb(239 239 239);
@@ -315,11 +316,8 @@ input[type="checkbox" i]:checked {
 /* Landscape */
 @media (orientation: landscape) {
   #gribbles {
-      grid-template-areas: 
-      "stats currentWord controls"
-      "foundWords board controls";
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 1fr auto auto;
+    grid-template:
+      "stats currentWord controls" auto "foundWords board controls" 1fr / 1fr auto auto;
   }
 
   #controls {
@@ -338,7 +336,7 @@ input[type="checkbox" i]:checked {
 }
 
 /* Large screen */
-@media (min-height: 600px) and (min-width: 600px) {
+@media (height >= 600px) and (width >= 600px) {
   #board {
     align-items: center;
     align-self: center;
