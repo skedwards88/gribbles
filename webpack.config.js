@@ -2,7 +2,7 @@ const path = require("path");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const packageJson = require("./package.json")
+const packageJson = require("./package.json");
 
 module.exports = (env, argv) => {
   if (argv.mode === "development") {
