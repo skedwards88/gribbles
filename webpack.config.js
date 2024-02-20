@@ -64,12 +64,13 @@ module.exports = (env, argv) => {
   });
 
   const serviceWorkerPlugin = new WorkboxPlugin.GenerateSW({
-    // these options encourage the ServiceWorkers to get in there fast
-    // and not allow any straggling "old" SWs to hang around
+    // This helps ensure that all pages will be controlled by a service worker immediately after that service worker activates
     clientsClaim: true,
+    // This skips the service worker waiting phase, meaning the service worker activates as soon as it's finished installing
     skipWaiting: true,
-    maximumFileSizeToCacheInBytes: 4200000, // special case to cache word list for offline play
-    cacheId: packageJson.version,
+    cacheId: `gribbles-${packageJson.version}`,
+    // special case to cache word list for offline play
+    maximumFileSizeToCacheInBytes: 4200000,
   });
 
   const plugins =
@@ -93,7 +94,7 @@ module.exports = (env, argv) => {
           use: ["style-loader", "css-loader"],
         },
         {
-          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
           type: "asset/resource",
         },
       ],
@@ -106,12 +107,13 @@ module.exports = (env, argv) => {
       clean: true, // removes unused files from output dir
     },
     performance: {
-      maxEntrypointSize: 2700000, // special case to cache word list for offline play
-      maxAssetSize: 2700000, // special case to cache word list for offline play
+      // special case to cache word list for offline play
+      maxEntrypointSize: 2700000, // bytes
+      // special case to cache word list for offline play
+      maxAssetSize: 2700000, // bytes
     },
     devServer: {
       static: "./dist",
-      historyApiFallback: true,
     },
     plugins: plugins,
   };
