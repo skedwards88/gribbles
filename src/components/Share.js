@@ -14,8 +14,6 @@ export function handleShare({text, seed}) {
       })
       .then(() => console.log("Successful share"))
       .catch((error) => {
-        // copy to clipboard as backup
-        handleCopy({text, fullUrl});
         console.log("Error sharing", error);
       });
   } else {
