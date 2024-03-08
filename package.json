@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
     "dev": "webpack-dev-server --mode development",
     "start": "webpack-dev-server",
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint --ignore-path .gitignore .",
-    "prettier": "npx prettier --ignore-path .gitignore --write .",
-    "style": "npx stylelint '**/*.css' --fix"
+    "eslint": "npx eslint --ignore-path .gitignore . --fix",
+    "prettier": "npx prettier --write .",
+    "style": "npx stylelint '**/*.css' --fix",
+    "lint": "npm run eslint && npm run prettier && npm run style"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "css-loader": "^6.8.1",
     "eslint": "^8.48.0",
     "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.3",
     "prettier": "^3.0.3",
     "style-loader": "^3.3.3",
