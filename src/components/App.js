@@ -13,7 +13,7 @@ import {
 import {timerInit} from "../logic/timerInit";
 import {timerReducer} from "../logic/timerReducer";
 
-export default function App() {
+function parseURLQuery() {
   // Get the seed and game settings from the query params
   // Only the game settings that would affect the board are shared
   const searchParams = new URLSearchParams(document.location.search);
@@ -26,6 +26,12 @@ export default function App() {
     minWordLength = parseInt(minWordLength);
     easyMode = easyMode === "e";
   }
+
+  return [seed, gridSize, minWordLength, easyMode];
+}
+
+export default function App() {
+  const [seed, gridSize, minWordLength, easyMode] = parseURLQuery();
 
   const [display, setDisplay] = React.useState("pause");
   const [installPromptEvent, setInstallPromptEvent] = React.useState();
@@ -85,28 +91,23 @@ export default function App() {
   });
 
   React.useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (event) =>
+    const listener = (event) =>
       handleBeforeInstallPrompt(
         event,
         setInstallPromptEvent,
         setShowInstallButton,
-      ),
-    );
-    return () =>
-      window.removeEventListener("beforeinstallprompt", (event) =>
-        handleBeforeInstallPrompt(
-          event,
-          setInstallPromptEvent,
-          setShowInstallButton,
-        ),
       );
+
+    window.addEventListener("beforeinstallprompt", listener);
+    return () => window.removeEventListener("beforeinstallprompt", listener);
   }, []);
 
   React.useEffect(() => {
-    window.addEventListener("appinstalled", () =>
-      handleAppInstalled(setInstallPromptEvent, setShowInstallButton),
-    );
-    return () => window.removeEventListener("appinstalled", handleAppInstalled);
+    const listener = () =>
+      handleAppInstalled(setInstallPromptEvent, setShowInstallButton);
+
+    window.addEventListener("appinstalled", listener);
+    return () => window.removeEventListener("appinstalled", listener);
   }, []);
 
   switch (display) {

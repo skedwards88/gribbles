@@ -14,8 +14,6 @@ export function handleShare({text, seed}) {
       })
       .then(() => console.log("Successful share"))
       .catch((error) => {
-        // copy to clipboard as backup
-        handleCopy({text, fullUrl});
         console.log("Error sharing", error);
       });
   } else {
@@ -36,7 +34,7 @@ function handleCopy({text, fullUrl}) {
 export function Share({text, seed}) {
   return (
     <button onClick={() => handleShare({text, seed})}>
-      {navigator.canShare ? "Share" : "Copy link to share"}
+      {navigator.canShare ? "Share" : "Copy link"}
     </button>
   );
 }

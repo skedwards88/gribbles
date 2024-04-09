@@ -27,6 +27,13 @@ export default function Heart({setDisplay}) {
         {`\n\n`}
         {<hr></hr>}
         {`\n`}
+        {`Thanks to the word frequency data sources attributed in `}
+        <a href="https://github.com/skedwards88/word_lists">
+          skedwards88/word_lists
+        </a>
+        {`.`}
+        {<hr></hr>}
+        {`\n`}
         <a href="./privacy.html">Privacy policy</a>
         {`\n\n\n\n`}
         <small>version {packageJson.version}</small>
