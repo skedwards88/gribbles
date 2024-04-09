@@ -7,7 +7,7 @@
   "lang": "en-US",
   "display": "standalone",
   "orientation": "portrait",
-  "start_url": "../.",
+  "start_url": "/gribbles/",
   "background_color": "#373647",
   "theme_color": "#373647",
   "shortcuts": [],
