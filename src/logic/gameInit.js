@@ -27,9 +27,11 @@ function getPlayableLetters({gridSize, minWordLength, easyMode, seed}) {
   while (!foundPlayableLetters) {
     letters = getLetters(gridSize, pseudoRandomGenerator);
     allWords = findAllWords({
-      grid: letters,
-      minWordLength: minWordLength,
-      easyMode: easyMode,
+      letters,
+      numColumns: Math.sqrt(letters.length),
+      numRows: Math.sqrt(letters.length),
+      minWordLength,
+      easyMode,
       trie,
     });
     if (allWords.length > minWords) {
