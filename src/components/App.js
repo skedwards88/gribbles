@@ -4,7 +4,7 @@ import {gameReducer} from "../logic/gameReducer";
 import Game from "./Game";
 import Settings from "./Settings";
 import Rules from "./Rules";
-import Heart from "./Heart";
+import MoreGames from "@skedwards88/shared-components/src/components/MoreGames";
 import {TimerBlocker} from "./Timer";
 import {
   handleAppInstalled,
@@ -123,7 +123,18 @@ export default function App() {
       );
 
     case "heart":
-      return <Heart setDisplay={setDisplay} />;
+      return (
+        <MoreGames
+          setDisplay={setDisplay}
+          games={["crossjig", "lexlet", "blobble", "wordfall", "logicGrid"]}
+          repoName={"gribbles"}
+          googleLink={
+            "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
+          }
+          includeExtraInfo={true}
+          includeWordAttribution={true}
+        ></MoreGames>
+      );
 
     case "info":
       return <Rules timerDispatch={timerDispatch} setDisplay={setDisplay} />;
