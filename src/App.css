@@ -69,7 +69,7 @@ button {
 }
 
 #pauseButton {
-  background-image: url("./images/pause.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/pause.svg");
 }
 
 #settingsButton {
