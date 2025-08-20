@@ -9,7 +9,9 @@ import {TimerBlocker} from "./Timer";
 import {
   handleAppInstalled,
   handleBeforeInstallPrompt,
-} from "../logic/handleInstall";
+} from "@skedwards88/shared-components/src/logic/handleInstall";
+import InstallOverview from "@skedwards88/shared-components/src/components/InstallOverview";
+import PWAInstall from "@skedwards88/shared-components/src/components/PWAInstall";
 import {timerInit} from "../logic/timerInit";
 import {timerReducer} from "../logic/timerReducer";
 
@@ -31,11 +33,45 @@ function parseURLQuery() {
 }
 
 export default function App() {
+  // *****
+  // Install handling setup
+  // *****
+  // Set up states that will be used by the handleAppInstalled and handleBeforeInstallPrompt listeners
+  const [installPromptEvent, setInstallPromptEvent] = React.useState();
+  const [showInstallButton, setShowInstallButton] = React.useState(true);
+
+  React.useEffect(() => {
+    // Need to store the function in a variable so that
+    // the add and remove actions can reference the same function
+    const listener = (event) =>
+      handleBeforeInstallPrompt(
+        event,
+        setInstallPromptEvent,
+        setShowInstallButton,
+      );
+
+    window.addEventListener("beforeinstallprompt", listener);
+
+    return () => window.removeEventListener("beforeinstallprompt", listener);
+  }, []);
+
+  React.useEffect(() => {
+    // Need to store the function in a variable so that
+    // the add and remove actions can reference the same function
+    const listener = () =>
+      handleAppInstalled(setInstallPromptEvent, setShowInstallButton);
+
+    window.addEventListener("appinstalled", listener);
+
+    return () => window.removeEventListener("appinstalled", listener);
+  }, []);
+  // *****
+  // End install handling setup
+  // *****
+
   const [seed, gridSize, minWordLength, easyMode] = parseURLQuery();
 
   const [display, setDisplay] = React.useState("pause");
-  const [installPromptEvent, setInstallPromptEvent] = React.useState();
-  const [showInstallButton, setShowInstallButton] = React.useState(true);
 
   const [gameState, dispatchGameState] = React.useReducer(
     gameReducer,
@@ -90,26 +126,6 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   });
 
-  React.useEffect(() => {
-    const listener = (event) =>
-      handleBeforeInstallPrompt(
-        event,
-        setInstallPromptEvent,
-        setShowInstallButton,
-      );
-
-    window.addEventListener("beforeinstallprompt", listener);
-    return () => window.removeEventListener("beforeinstallprompt", listener);
-  }, []);
-
-  React.useEffect(() => {
-    const listener = () =>
-      handleAppInstalled(setInstallPromptEvent, setShowInstallButton);
-
-    window.addEventListener("appinstalled", listener);
-    return () => window.removeEventListener("appinstalled", listener);
-  }, []);
-
   switch (display) {
     case "settings":
       return (
@@ -139,6 +155,29 @@ export default function App() {
     case "info":
       return <Rules timerDispatch={timerDispatch} setDisplay={setDisplay} />;
 
+    case "installOverview":
+      return (
+        <InstallOverview
+          setDisplay={setDisplay}
+          setInstallPromptEvent={setInstallPromptEvent}
+          showInstallButton={showInstallButton}
+          installPromptEvent={installPromptEvent}
+          googleAppLink={
+            "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
+          }
+        ></InstallOverview>
+      );
+
+    case "pwaInstall":
+      return (
+        <PWAInstall
+          setDisplay={setDisplay}
+          googleAppLink={
+            "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
+          }
+        ></PWAInstall>
+      );
+
     case "game":
       return (
         <Game
@@ -147,9 +186,6 @@ export default function App() {
           timerState={timerState}
           timerDispatch={timerDispatch}
           setDisplay={setDisplay}
-          setInstallPromptEvent={setInstallPromptEvent}
-          showInstallButton={showInstallButton}
-          installPromptEvent={installPromptEvent}
         ></Game>
       );
 

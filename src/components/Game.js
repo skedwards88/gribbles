@@ -12,9 +12,6 @@ export default function Game({
   timerState,
   timerDispatch,
   setDisplay,
-  setInstallPromptEvent,
-  showInstallButton,
-  installPromptEvent,
 }) {
   return (
     <div
@@ -32,9 +29,6 @@ export default function Game({
         gameState={gameState}
         dispatchGameState={dispatchGameState}
         setDisplay={setDisplay}
-        setInstallPromptEvent={setInstallPromptEvent}
-        showInstallButton={showInstallButton}
-        installPromptEvent={installPromptEvent}
         timerState={timerState}
         timerDispatch={timerDispatch}
       ></ControlBar>
