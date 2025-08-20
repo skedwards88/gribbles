@@ -19,7 +19,7 @@ body {
   display: grid;
   height: 90vh; /* fallback if svh isn't handled */
   height: 98svh;
-  overflow: scroll;
+  overflow: auto;
 }
 
 h1 {
@@ -73,27 +73,27 @@ button {
 }
 
 #settingsButton {
-  background-image: url("./images/settings.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/gear.svg");
 }
 
 #newGameButton {
-  background-image: url("./images/new_game.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/new_game.svg");
 }
 
 #infoButton {
-  background-image: url("./images/info.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/info.svg");
 }
 
 #heartButton {
-  background-image: url("./images/heart.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/heart.svg");
 }
 
 #installButton {
-  background-image: url("./images/install.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/install.svg");
 }
 
 #shareButton {
-  background-image: url("./images/share.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/share.svg");
 }
 
 /* Settings */
@@ -101,7 +101,7 @@ button {
 .settings {
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
   justify-content: space-evenly;
   align-items: center;
   font-size: calc(var(--default-font-size) * 0.7);
@@ -171,7 +171,7 @@ input[type="checkbox" i] {
 }
 
 input[type="checkbox" i]:checked {
-  background-image: url("./images/checkmark-black.svg");
+  background-image: url("@skedwards88/shared-components/src/images/icons/checkmark_black.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -184,7 +184,7 @@ input[type="checkbox" i]:checked {
   display: flex;
   flex-direction: column;
   text-align: center;
-  overflow: scroll;
+  overflow: auto;
   justify-items: center;
   justify-content: space-evenly;
   align-items: center;
@@ -241,7 +241,7 @@ input[type="checkbox" i]:checked {
   color: black;
   flex-flow: column wrap;
   min-height: 10vh;
-  overflow: scroll;
+  overflow: auto;
   padding: 10px;
   font-size: calc(var(--default-font-size) / 2);
 }
