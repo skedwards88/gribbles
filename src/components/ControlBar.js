@@ -1,6 +1,7 @@
 import React from "react";
-import {handleShare} from "./Share";
 import {isRunningStandalone} from "@skedwards88/shared-components/src/logic/isRunningStandalone";
+import Share from "@skedwards88/shared-components/src/components/Share";
+import {handleShare} from "@skedwards88/shared-components/src/logic/handleShare";
 
 export default function ControlBar({
   gameState,
@@ -53,23 +54,24 @@ export default function ControlBar({
 
       <button id="heartButton" onClick={() => setDisplay("heart")}></button>
 
-      {navigator.canShare ? (
-        <button
-          id="shareButton"
-          onClick={() => {
-            timerDispatch({action: "pause"});
-            setDisplay("pause");
-            handleShare({
-              text: "Try out this Gribbles puzzle:",
-              seed: `${gameState.seed}_${Math.sqrt(gameState.letters.length)}_${
-                gameState.minWordLength
-              }_${gameState.easyMode ? "e" : "h"}`,
-            });
-          }}
-        ></button>
-      ) : (
-        <></>
-      )}
+      <Share
+        id="shareButton"
+        className="controlButton"
+        onClick={() => {
+          timerDispatch({action: "pause"});
+          setDisplay("pause");
+          handleShare({
+            appName: "Gribbles",
+            text: "Try out this Gribbles puzzle!",
+            url: `https://skedwards88.github.io/gribbles/?puzzle=${
+              gameState.seed
+            }_${Math.sqrt(gameState.letters.length)}_${
+              gameState.minWordLength
+            }_${gameState.easyMode ? "e" : "h"}`,
+            origin: "control bar",
+          });
+        }}
+      ></Share>
 
       {!isRunningStandalone() ? (
         <button
