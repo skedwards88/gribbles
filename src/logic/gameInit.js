@@ -3,6 +3,7 @@ import {shuffleArray} from "@skedwards88/word_logic";
 import {findAllWords} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 import seedrandom from "seedrandom";
+import {getRandomSeed} from "@skedwards88/shared-components/src/logic/getRandomSeed";
 
 function getLetters(gridSize, pseudoRandomGenerator) {
   // Given the distribution of letters in the word list
@@ -39,11 +40,6 @@ function getPlayableLetters({gridSize, minWordLength, easyMode, seed}) {
     }
   }
   return [letters, allWords];
-}
-
-function getRandomSeed() {
-  const currentDate = new Date();
-  return currentDate.getTime().toString();
 }
 
 export function gameInit({
