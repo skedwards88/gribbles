@@ -72,6 +72,10 @@ button {
   background-image: url("@skedwards88/shared-components/src/images/icons/pause.svg");
 }
 
+#pauseButton:disabled {
+  opacity: 0.5;
+}
+
 #settingsButton {
   background-image: url("@skedwards88/shared-components/src/images/icons/gear.svg");
 }
@@ -363,4 +367,8 @@ input[type="checkbox" i]:checked {
   #setting-buttons {
     width: fit-content;
   }
+
+  .info {
+  font-size: calc(var(--default-font-size) / 2);
+}
 }
