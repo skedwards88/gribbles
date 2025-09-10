@@ -317,30 +317,8 @@ input[type="checkbox" i]:checked {
   color: darkgray;
 }
 
-/* Landscape */
-@media (orientation: landscape) and (height < 600px) and (width < 600px) {
-  #gribbles {
-    grid-template:
-      "stats currentWord controls" auto "foundWords board controls" 1fr / 1fr auto auto;
-  }
-
-  #controls {
-    flex-direction: column;
-    border: solid var(--light-color);
-    border-width: 0 0 0 2px;
-    align-items: center;
-    height: 100%;
-    width: 7vw;
-  }
-
-  #controls > button {
-    height: min(var(--default-font-size), 10%);
-    width: var(--default-font-size);
-  }
-}
-
 /* Large screen */
-@media (height >= 600px) and (width >= 600px) {
+@media (min-height: 600px) and (min-width: 936px), (min-width: 600px) and (min-height: 936px) {
   .App {
     width: 50vmin;
     margin-left: auto;
