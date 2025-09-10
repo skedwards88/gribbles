@@ -318,7 +318,7 @@ input[type="checkbox" i]:checked {
 }
 
 /* Large screen */
-@media (min-height: 600px) and (min-width: 936px), (min-width: 600px) and (min-height: 936px) {
+@media (height >= 600px) and (width >= 936px), (width >= 600px) and (height >= 936px) {
   .App {
     width: 50vmin;
     margin-left: auto;
