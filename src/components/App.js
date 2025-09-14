@@ -175,6 +175,7 @@ export default function App() {
           googleAppLink={
             "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
           }
+          pwaLink={"https://skedwards88.github.io/gribbles"}
         ></PWAInstall>
       );
 
