@@ -73,7 +73,12 @@ export function gameInit({
     savedGameState.easyMode == easyMode &&
     savedGameState.seed === seed
   ) {
-    return {...savedGameState, playedIndexes: [], result: ""};
+    return {
+      ...savedGameState,
+      playedIndexes: [],
+      result: "",
+      analyticsToLog: [],
+    };
   }
 
   // use the specified settings, otherwise check local storage, otherwise use default
@@ -98,5 +103,14 @@ export function gameInit({
     allWords: allWords,
     easyMode: easyMode,
     seed: seed,
+    analyticsToLog: [
+      {
+        eventName: "new_game",
+        eventInfo: {
+          minWordLength,
+          easyMode,
+        },
+      },
+    ],
   };
 }
