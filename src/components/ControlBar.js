@@ -2,6 +2,7 @@ import React from "react";
 import {isRunningStandalone} from "@skedwards88/shared-components/src/logic/isRunningStandalone";
 import Share from "@skedwards88/shared-components/src/components/Share";
 import {handleShare} from "@skedwards88/shared-components/src/logic/handleShare";
+import {useMetadataContext} from "@skedwards88/shared-components/src/components/MetadataContextProvider";
 
 export default function ControlBar({
   gameState,
@@ -10,6 +11,8 @@ export default function ControlBar({
   timerState,
   timerDispatch,
 }) {
+  const {userId, sessionId} = useMetadataContext();
+
   return (
     <div id="controls">
       <button
@@ -71,6 +74,8 @@ export default function ControlBar({
             origin: "control bar",
           });
         }}
+        userId={userId}
+        sessionId={sessionId}
       ></Share>
 
       {!isRunningStandalone() ? (

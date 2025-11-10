@@ -77,7 +77,6 @@ export function gameInit({
       ...savedGameState,
       playedIndexes: [],
       result: "",
-      analyticsToLog: [],
     };
   }
 
@@ -103,14 +102,5 @@ export function gameInit({
     allWords: allWords,
     easyMode: easyMode,
     seed: seed,
-    analyticsToLog: [
-      {
-        eventName: "new_game",
-        eventInfo: {
-          minWordLength,
-          easyMode,
-        },
-      },
-    ],
   };
 }
