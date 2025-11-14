@@ -8,7 +8,6 @@
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "https://gribbles.twistedtrailgames.com",
-  "scope": "/gribbles/",
   "background_color": "#373647",
   "theme_color": "#373647",
   "shortcuts": [],
