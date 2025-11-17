@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "gribbles.io.github.skedwards88.twa",
+      "sha256_cert_fingerprints": [
+        "24:FE:2C:4F:52:32:C9:1B:D7:24:93:F7:3D:42:E6:A9:52:F9:C9:03:B6:9D:A6:39:72:F4:06:2B:64:12:52:A1"
+      ]
+    }
+  }
+]
