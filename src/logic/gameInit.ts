@@ -90,10 +90,6 @@ export function gameInit({
   seed?: string;
   useSaved?: boolean;
 }): GameState {
-  if (!seed) {
-    seed = getRandomSeed();
-  }
-
   const savedGameState = getFromStorage<GameState>("gribblesGameState");
 
   const savedTimerState = getFromStorage<TimerState>("gribblesTimerState");
@@ -102,21 +98,37 @@ export function gameInit({
     useSaved &&
     savedGameState &&
     savedTimerState &&
+    // validate that time remains
     savedTimerState.remainingTime > 0 &&
-    savedGameState.foundWords &&
+    // validate the shape of the saved state:
+    typeof savedGameState === "object" &&
+    savedGameState.seed &&
+    Array.isArray(savedGameState.foundWords) &&
+    Array.isArray(savedGameState.allWords) &&
+    Array.isArray(savedGameState.letters) &&
+    typeof savedGameState.easyMode === "boolean" &&
+    typeof savedGameState.minWordLength === "number" &&
+    (savedGameState.minWordLength === 3 ||
+      savedGameState.minWordLength === 4) &&
+    typeof savedGameState.bonusWordCount === "number" &&
     savedGameState.bonusWordCount >= 0 &&
-    savedGameState.minWordLength == minWordLength &&
-    savedGameState.letters &&
-    Math.sqrt(savedGameState.letters.length) == gridSize &&
-    savedGameState.allWords &&
-    savedGameState.easyMode == easyMode &&
-    savedGameState.seed === seed
+    // validate that the saved state matches the specific parameters if any were passed:
+    (!minWordLength || savedGameState.minWordLength == minWordLength) &&
+    (!gridSize || Math.sqrt(savedGameState.letters.length) == gridSize) &&
+    (easyMode === undefined || savedGameState.easyMode == easyMode) &&
+    (!seed || savedGameState.seed === seed)
   ) {
     return {
       ...savedGameState,
       playedIndexes: [],
+      wordInProgress: false,
+      lastInvalidWord: null,
       result: "",
     };
+  }
+
+  if (!seed) {
+    seed = getRandomSeed();
   }
 
   // use the specified settings, otherwise check local storage, otherwise use default
