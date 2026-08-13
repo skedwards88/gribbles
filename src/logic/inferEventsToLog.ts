@@ -20,7 +20,7 @@ export function inferEventsToLog(
       },
     });
 
-    // If the old game had at least 1 found word, log a
+    // If the old game had at least 1 found word, log a game completion event
     // (To track the actual game completion event, would need to also collect the timer state)
     if (oldState.foundWords.length > 1) {
       analyticsToLog.push({
