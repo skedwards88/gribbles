@@ -13,12 +13,10 @@ export function Timer({
   React.useEffect(() => {
     let timerID: NodeJS.Timeout | undefined;
     if (timerState.isRunning) {
-      if (timerState.remainingTime > 0) {
-        timerID = setInterval(() => timerDispatch({action: "decrement"}), 1000);
-      }
+      timerID = setInterval(() => timerDispatch({action: "decrement"}), 1000);
     }
     return (): void => clearInterval(timerID);
-  }, [timerState.isRunning]);
+  }, [timerState.isRunning, timerDispatch]);
 
   let display;
   if (timerState.remainingTime > 0) {
