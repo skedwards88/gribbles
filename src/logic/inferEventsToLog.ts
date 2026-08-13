@@ -16,8 +16,30 @@ export function inferEventsToLog(
       eventInfo: {
         minWordLength: newState.minWordLength,
         easyMode: newState.easyMode,
+        gridSize: Math.sqrt(newState.letters.length),
       },
     });
+
+    // If the old game had at least 1 found word, log a
+    // (To track the actual game completion event, would need to also collect the timer state)
+    if (oldState.foundWords.length > 1) {
+      analyticsToLog.push({
+        eventName: "completed_game",
+        eventInfo: {
+          numFoundWords: oldState.foundWords.length,
+          numFoundBonusWords: oldState.bonusWordCount,
+          numUnfoundWords:
+            oldState.allWords.length - oldState.foundWords.length,
+          percentFound:
+            ((oldState.foundWords.length - oldState.bonusWordCount) /
+              oldState.allWords.length) *
+            100,
+          minWordLength: oldState.minWordLength,
+          easyMode: oldState.easyMode,
+          gridSize: Math.sqrt(oldState.letters.length),
+        },
+      });
+    }
   }
 
   // If they found an invalid word
