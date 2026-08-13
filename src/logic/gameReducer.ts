@@ -1,16 +1,40 @@
 import {isKnown} from "@skedwards88/word_logic";
-import {gameInit} from "./gameInit";
+import {gameInit, type GameState} from "./gameInit";
 import {checkIfNeighbors} from "@skedwards88/word_logic";
 import {trie} from "./trie";
 
-export function gameReducer(currentGameState, payload) {
+export type GameReducerPayload =
+  | {
+      action: "newGame";
+      gridSize?: number;
+      minWordLength?: number;
+      easyMode?: boolean;
+    }
+  | {
+      action: "startWord";
+      letterIndex: number;
+    }
+  | {
+      action: "addLetter";
+      letterIndex: number;
+    }
+  | {
+      action: "removeLetter";
+      letterIndex: number;
+    }
+  | {
+      action: "endWord";
+    };
+
+export function gameReducer(
+  currentGameState: GameState,
+  payload: GameReducerPayload,
+): GameState {
   if (payload.action === "newGame") {
     return gameInit({
-      gridSize: Math.sqrt(currentGameState.letters.length),
-      minWordLength: currentGameState.minWordLength,
-      easyMode: currentGameState.easyMode,
-      ...payload,
-      seed: undefined,
+      gridSize: payload.gridSize ?? Math.sqrt(currentGameState.letters.length),
+      minWordLength: payload.minWordLength ?? currentGameState.minWordLength,
+      easyMode: payload.easyMode ?? currentGameState.easyMode,
       useSaved: false,
     });
   } else if (payload.action === "startWord") {
@@ -127,7 +151,9 @@ export function gameReducer(currentGameState, payload) {
       bonusWordCount: newBonusWordCount,
     };
   } else {
-    console.log(`unknown action: ${payload.action}`);
-    return {...currentGameState};
+    console.log(
+      `unknown action: ${(payload as unknown as {action: string}).action}`,
+    );
+    return currentGameState;
   }
 }

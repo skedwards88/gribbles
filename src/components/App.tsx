@@ -6,10 +6,7 @@ import Settings from "./Settings";
 import Rules from "./Rules";
 import MoreGames from "@skedwards88/shared-components/src/components/MoreGames";
 import {TimerBlocker} from "./Timer";
-import {
-  handleAppInstalled,
-  handleBeforeInstallPrompt,
-} from "@skedwards88/shared-components/src/logic/handleInstall";
+import {useInstallPrompt} from "@skedwards88/shared-components/src/logic/handleInstall";
 import InstallOverview from "@skedwards88/shared-components/src/components/InstallOverview";
 import PWAInstall from "@skedwards88/shared-components/src/components/PWAInstall";
 import {timerInit} from "../logic/timerInit";
@@ -18,71 +15,54 @@ import {sendAnalyticsCF} from "@skedwards88/shared-components/src/logic/sendAnal
 import {useMetadataContext} from "@skedwards88/shared-components/src/components/MetadataContextProvider";
 import {inferEventsToLog} from "../logic/inferEventsToLog";
 
-function parseURLQuery() {
+export type DisplayState =
+  | "settings"
+  | "heart"
+  | "info"
+  | "installOverview"
+  | "pwaInstall"
+  | "pause"
+  | "game";
+
+function parseURLQuery():
+  | [string, number, number, boolean]
+  | [undefined, undefined, undefined, undefined] {
   // Get the seed and game settings from the query params
   // Only the game settings that would affect the board are shared
   const searchParams = new URLSearchParams(document.location.search);
   const seedQuery = searchParams.get("puzzle");
-  // The seed query consists of parts separated by an underscore
-  let seed, gridSize, minWordLength, easyMode;
-  if (seedQuery) {
-    [seed, gridSize, minWordLength, easyMode] = seedQuery.split("_");
-    gridSize = parseInt(gridSize);
-    minWordLength = parseInt(minWordLength);
-    easyMode = easyMode === "e";
-  }
 
-  return [seed, gridSize, minWordLength, easyMode];
+  // The seed query consists of parts separated by an underscore
+  if (seedQuery) {
+    const [seed, gridSizeRaw, minWordLengthRaw, easyModeRaw] =
+      seedQuery.split("_");
+    const gridSize = parseInt(gridSizeRaw);
+    const minWordLength = parseInt(minWordLengthRaw);
+    const easyMode = easyModeRaw === "e";
+    return [seed, gridSize, minWordLength, easyMode];
+  } else {
+    return [undefined, undefined, undefined, undefined];
+  }
 }
 
-export default function App() {
-  // *****
-  // Install handling setup
-  // *****
-  // Set up states that will be used by the handleAppInstalled and handleBeforeInstallPrompt listeners
-  const [installPromptEvent, setInstallPromptEvent] = React.useState();
-  const [showInstallButton, setShowInstallButton] = React.useState(true);
+export default function App(): React.JSX.Element {
+  const {userId, sessionId} = useMetadataContext();
 
-  React.useEffect(() => {
-    // Need to store the function in a variable so that
-    // the add and remove actions can reference the same function
-    const listener = (event) =>
-      handleBeforeInstallPrompt(
-        event,
-        setInstallPromptEvent,
-        setShowInstallButton,
-      );
-
-    window.addEventListener("beforeinstallprompt", listener);
-
-    return () => window.removeEventListener("beforeinstallprompt", listener);
-  }, []);
-
-  React.useEffect(() => {
-    // Need to store the function in a variable so that
-    // the add and remove actions can reference the same function
-    const listener = () =>
-      handleAppInstalled(setInstallPromptEvent, setShowInstallButton);
-
-    window.addEventListener("appinstalled", listener);
-
-    return () => window.removeEventListener("appinstalled", listener);
-  }, []);
-  // *****
-  // End install handling setup
-  // *****
+  // This must live at the top level component, not in InstallOverview where it is used, since the InstallOverview is not rendered initially and therefore misses its chance to attach the listeners
+  const {installPromptEvent, showInstallButton, handleInstall} =
+    useInstallPrompt({userId, sessionId});
 
   const [seed, gridSize, minWordLength, easyMode] = parseURLQuery();
 
-  const [display, setDisplay] = React.useState("pause");
+  const [display, setDisplay] = React.useState<DisplayState>("pause");
 
   const [gameState, dispatchGameState] = React.useReducer(
     gameReducer,
     {
-      seed,
-      gridSize,
-      minWordLength,
-      easyMode,
+      ...(seed && {seed}),
+      ...(gridSize && {gridSize}),
+      ...(minWordLength && {minWordLength}),
+      ...(easyMode && {easyMode}),
     },
     gameInit,
   );
@@ -112,12 +92,9 @@ export default function App() {
     );
   }, [timerState]);
 
-  function handleVisibilityChange() {
+  function handleVisibilityChange(): void {
     // Pause the timer if the page is hidden
-    if (
-      (document.hidden || document.msHidden || document.webkitHidden) &&
-      timerState.isRunning
-    ) {
+    if (document.hidden && timerState.isRunning) {
       timerDispatch({action: "pause"});
       setDisplay("pause");
     }
@@ -125,11 +102,9 @@ export default function App() {
 
   React.useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () =>
+    return (): void =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   });
-
-  const {userId, sessionId} = useMetadataContext();
 
   // Store the previous state so that we can infer which analytics events to send
   const previousStateRef = React.useRef(gameState);
@@ -180,14 +155,14 @@ export default function App() {
       return (
         <InstallOverview
           setDisplay={setDisplay}
-          setInstallPromptEvent={setInstallPromptEvent}
-          showInstallButton={showInstallButton}
-          installPromptEvent={installPromptEvent}
           googleAppLink={
             "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
           }
           userId={userId}
           sessionId={sessionId}
+          installPromptEvent={installPromptEvent}
+          showInstallButton={showInstallButton}
+          handleInstall={handleInstall}
         ></InstallOverview>
       );
 
@@ -199,6 +174,8 @@ export default function App() {
             "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
           }
           pwaLink={"https://skedwards88.github.io/gribbles"}
+          userId={userId}
+          sessionId={sessionId}
         ></PWAInstall>
       );
 

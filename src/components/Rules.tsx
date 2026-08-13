@@ -1,8 +1,15 @@
-import React from "react";
 import PlayButtons from "@skedwards88/shared-components/src/components/PlayButtons";
 import packageJson from "../../package.json";
+import type {TimerReducerPayload} from "../logic/timerReducer";
+import type {DisplayState} from "./App";
 
-export default function Rules({setDisplay, timerDispatch}) {
+export default function Rules({
+  setDisplay,
+  timerDispatch,
+}: {
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayState>>;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+}): React.JSX.Element {
   return (
     <div className="App info">
       <h1>Gribbles</h1>

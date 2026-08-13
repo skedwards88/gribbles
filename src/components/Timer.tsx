@@ -1,14 +1,23 @@
 import React from "react";
+import type {TimerReducerPayload} from "../logic/timerReducer";
+import type {TimerState} from "../logic/timerInit";
+import type {DisplayState} from "./App";
 
-export function Timer({timerState, timerDispatch}) {
+export function Timer({
+  timerState,
+  timerDispatch,
+}: {
+  timerState: TimerState;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+}): React.JSX.Element {
   React.useEffect(() => {
-    let timerID;
+    let timerID: NodeJS.Timeout | undefined;
     if (timerState.isRunning) {
       if (timerState.remainingTime > 0) {
         timerID = setInterval(() => timerDispatch({action: "decrement"}), 1000);
       }
     }
-    return () => clearInterval(timerID);
+    return (): void => clearInterval(timerID);
   }, [timerState.isRunning]);
 
   let display;
@@ -24,7 +33,15 @@ export function Timer({timerState, timerDispatch}) {
   return <div>{display}</div>;
 }
 
-export function TimerBlocker({timerState, timerDispatch, setDisplay}) {
+export function TimerBlocker({
+  timerState,
+  timerDispatch,
+  setDisplay,
+}: {
+  timerState: TimerState;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayState>>;
+}): React.JSX.Element {
   if (timerState.remainingTime <= 0) {
     return <div className="App fadeOut">{"GAME OVER!"}</div>;
   }

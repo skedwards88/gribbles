@@ -1,6 +1,8 @@
-import React from "react";
-
-export function FoundWords({foundWords}) {
+export function FoundWords({
+  foundWords,
+}: {
+  foundWords: string[];
+}): React.JSX.Element {
   return (
     <div id="foundWords">
       {foundWords.map((word, index) => (
@@ -10,7 +12,13 @@ export function FoundWords({foundWords}) {
   );
 }
 
-export function AllWords({foundWords, allWords}) {
+export function AllWords({
+  foundWords,
+  allWords,
+}: {
+  foundWords: string[];
+  allWords: string[];
+}): React.JSX.Element {
   // The words that the user found
   // And all of the words that the user didn't find
   const unfoundWords = allWords.filter((word) => !foundWords.includes(word));

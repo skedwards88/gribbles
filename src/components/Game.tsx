@@ -1,10 +1,14 @@
-import React from "react";
 import ControlBar from "./ControlBar";
 import {Timer} from "./Timer";
 import Score from "./Score";
 import Board from "./Board";
 import {WordResult} from "./WordResult";
 import {FoundWords, AllWords} from "./FoundWords";
+import type {GameReducerPayload} from "../logic/gameReducer";
+import type {DisplayState} from "./App";
+import type {GameState} from "../logic/gameInit";
+import type {TimerState} from "../logic/timerInit";
+import type {TimerReducerPayload} from "../logic/timerReducer";
 
 export default function Game({
   gameState,
@@ -12,13 +16,19 @@ export default function Game({
   timerState,
   timerDispatch,
   setDisplay,
-}) {
+}: {
+  gameState: GameState;
+  dispatchGameState: React.Dispatch<GameReducerPayload>;
+  timerState: TimerState;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayState>>;
+}): React.JSX.Element {
   return (
     <div
       className="App"
       id="gribbles"
-      onPointerUp={(e) => {
-        e.preventDefault();
+      onPointerUp={(event) => {
+        event.preventDefault();
 
         dispatchGameState({
           action: "endWord",

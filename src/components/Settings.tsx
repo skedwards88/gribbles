@@ -1,4 +1,20 @@
-import React from "react";
+import type {GameState} from "../logic/gameInit";
+import type {GameReducerPayload} from "../logic/gameReducer";
+import type {TimerState} from "../logic/timerInit";
+import type {TimerReducerPayload} from "../logic/timerReducer";
+import type {DisplayState} from "./App";
+
+interface NewGameFormElements extends HTMLFormControlsCollection {
+  gridSize: HTMLInputElement;
+  minWordLength: HTMLInputElement;
+  gameLength: HTMLInputElement;
+  bonusTime: HTMLInputElement;
+  easyMode: HTMLInputElement;
+}
+
+interface NewGameFormElement extends HTMLFormElement {
+  readonly elements: NewGameFormElements;
+}
 
 export default function Settings({
   setDisplay,
@@ -6,17 +22,25 @@ export default function Settings({
   gameState,
   timerState,
   timerDispatch,
-}) {
-  function handleNewGame(event) {
+}: {
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayState>>;
+  dispatchGameState: React.Dispatch<GameReducerPayload>;
+  gameState: GameState;
+  timerState: TimerState;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+}): React.JSX.Element {
+  function handleNewGame(event: React.SubmitEvent<NewGameFormElement>): void {
     event.preventDefault();
 
-    const newGridSize = parseInt(event.target.elements.gridSize.value);
+    const newGridSize = parseInt(event.currentTarget.elements.gridSize.value);
     const newMinWordLength = parseInt(
-      event.target.elements.minWordLength.value,
+      event.currentTarget.elements.minWordLength.value,
     );
-    const newGameLength = parseInt(event.target.elements.gameLength.value);
-    const newBonusTime = parseInt(event.target.elements.bonusTime.value);
-    const newEasyMode = event.target.elements.easyMode.checked;
+    const newGameLength = parseInt(
+      event.currentTarget.elements.gameLength.value,
+    );
+    const newBonusTime = parseInt(event.currentTarget.elements.bonusTime.value);
+    const newEasyMode = event.currentTarget.elements.easyMode.checked;
 
     dispatchGameState({
       action: "newGame",
@@ -35,7 +59,7 @@ export default function Settings({
   }
 
   return (
-    <form className="App settings" onSubmit={(e) => handleNewGame(e)}>
+    <form className="App settings" onSubmit={handleNewGame}>
       <div id="settings">
         <div className="setting">
           <div className="setting-description">

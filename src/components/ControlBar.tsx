@@ -1,8 +1,12 @@
-import React from "react";
 import {isRunningStandalone} from "@skedwards88/shared-components/src/logic/isRunningStandalone";
 import Share from "@skedwards88/shared-components/src/components/Share";
 import {handleShare} from "@skedwards88/shared-components/src/logic/handleShare";
 import {useMetadataContext} from "@skedwards88/shared-components/src/components/MetadataContextProvider";
+import type {GameReducerPayload} from "../logic/gameReducer";
+import type {DisplayState} from "./App";
+import type {GameState} from "../logic/gameInit";
+import type {TimerState} from "../logic/timerInit";
+import type {TimerReducerPayload} from "../logic/timerReducer";
 
 export default function ControlBar({
   gameState,
@@ -10,7 +14,13 @@ export default function ControlBar({
   setDisplay,
   timerState,
   timerDispatch,
-}) {
+}: {
+  gameState: GameState;
+  dispatchGameState: React.Dispatch<GameReducerPayload>;
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayState>>;
+  timerState: TimerState;
+  timerDispatch: React.Dispatch<TimerReducerPayload>;
+}): React.JSX.Element {
   const {userId, sessionId} = useMetadataContext();
 
   return (
@@ -72,10 +82,10 @@ export default function ControlBar({
               gameState.minWordLength
             }_${gameState.easyMode ? "e" : "h"}`,
             origin: "control bar",
+            userId: userId,
+            sessionId: sessionId,
           });
         }}
-        userId={userId}
-        sessionId={sessionId}
       ></Share>
 
       {!isRunningStandalone() ? (
