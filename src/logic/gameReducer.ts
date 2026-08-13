@@ -131,6 +131,8 @@ export function gameReducer(
         wordInProgress: false,
         playedIndexes: [],
         result: "Unknown word",
+        // store the word in the state so we can log it in the analytics to see if the dictionary should be updated
+        lastInvalidWord: newWord.length >= 3 ? newWord : null,
       };
     }
 

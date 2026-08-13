@@ -20,5 +20,18 @@ export function inferEventsToLog(
     });
   }
 
+  // If they found an invalid word
+  if (
+    newState.lastInvalidWord &&
+    newState.lastInvalidWord != oldState.lastInvalidWord
+  ) {
+    analyticsToLog.push({
+      eventName: "unknown_word",
+      eventInfo: {
+        word: newState.lastInvalidWord,
+      },
+    });
+  }
+
   return analyticsToLog;
 }

@@ -18,6 +18,7 @@ export type GameState = {
   allWords: string[];
   easyMode: boolean;
   wordInProgress: boolean;
+  lastInvalidWord: string | null;
   seed: string;
 };
 
@@ -145,5 +146,6 @@ export function gameInit({
     easyMode,
     seed,
     wordInProgress: false,
+    lastInvalidWord: null,
   };
 }
