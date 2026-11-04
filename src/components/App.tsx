@@ -136,7 +136,7 @@ export default function App(): React.JSX.Element {
 
     case "heart":
       return (
-        <MoreGames
+        <MoreGames<DisplayState>
           setDisplay={setDisplay}
           games={["crossjig", "lexlet", "blobble", "wordfall", "logicGrid"]}
           repoName={"gribbles"}
@@ -145,6 +145,8 @@ export default function App(): React.JSX.Element {
           }
           includeExtraInfo={true}
           includeWordAttribution={true}
+          userId={userId}
+          sessionId={sessionId}
         ></MoreGames>
       );
 
@@ -153,7 +155,7 @@ export default function App(): React.JSX.Element {
 
     case "installOverview":
       return (
-        <InstallOverview
+        <InstallOverview<DisplayState>
           setDisplay={setDisplay}
           googleAppLink={
             "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
@@ -168,7 +170,7 @@ export default function App(): React.JSX.Element {
 
     case "pwaInstall":
       return (
-        <PWAInstall
+        <PWAInstall<DisplayState>
           setDisplay={setDisplay}
           googleAppLink={
             "https://play.google.com/store/apps/details?id=gribbles.io.github.skedwards88.twa&hl=en_US"
